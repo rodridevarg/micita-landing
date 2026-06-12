@@ -917,7 +917,7 @@
         <div class="section__header">
           <span class="section__label">Probá antes de decidir</span>
           <h2 class="section__title">Escribile como si fueras un cliente</h2>
-          <p class="section__subtitle">Esta es una demo del chat. Escribí "Hola" o tocá un botón para probar el flujo.</p>
+          <p class="section__subtitle">Esta es una demo del chat. Tocá un botón o escribí tu mensaje para probar el flujo.</p>
         </div>
         <div class="demo-container">
           <div class="demo-header">
@@ -1134,7 +1134,7 @@
           if (text.includes('si') || text.includes('sí')) {
             botResponse('✅ *¡Turno confirmado!*\n\n📅 ' + state.date + ' a las ' + state.time + '\n💆 ' + state.serviceLabel + '\n\n¡Te esperamos! 🎉\n\n¿Necesitás algo más?', ['Sacar otro turno', 'Ver servicios', 'No, gracias'], 'greeting');
           } else {
-            botResponse('Turno cancelado. ¿Querés intentar de nuevo? Escribí *turno* cuando quieras.', ['1', 'Hola'], 'greeting');
+            botResponse('Turno cancelado. ¿Querés intentar de nuevo? Escribí *turno* cuando quieras.', ['1', '2', '3'], 'greeting');
           }
         }
       }
@@ -1144,7 +1144,7 @@
 
       // Initial greeting
       setTimeout(() => {
-        botResponse('¡Hola! ✨ Soy MiCita. ¿En qué puedo ayudarte? 👇\n\n1️⃣ Sacar turno\n2️⃣ Ver servicios\n3️⃣ Consultar precios\n4️⃣ Cómo llegar\n7️⃣ Hablar con humano', ['1', '2', '3', 'Hola'], 'greeting');
+        botResponse('¡Hola! ✨ Soy MiCita. ¿En qué puedo ayudarte? 👇\n\n1️⃣ Sacar turno\n2️⃣ Ver servicios\n3️⃣ Consultar precios\n4️⃣ Cómo llegar\n7️⃣ Hablar con humano', ['1', '2', '3', '4'], 'greeting');
       }, delay || 500);
     }
 
