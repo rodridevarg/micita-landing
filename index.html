@@ -376,11 +376,17 @@
     .demo-header__avatar {
       width: 40px; height: 40px;
       border-radius: 50%;
+      overflow: hidden;
       background: var(--accent);
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 1.2rem;
+    }
+    .demo-header__avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
     .demo-header__name {
       font-weight: 600;
@@ -551,6 +557,7 @@
       <div class="container hero__container">
         <div>
           <h1 class="hero__title">Tus clientes agendan <span>citas por WhatsApp</span> sin que vos hagas nada.</h1>
+          <p style="font-size: 1rem; color: var(--accent); font-weight: 500; margin-bottom: 8px;">✨ Con Herminda, tu secretaria virtual</p>
           <p class="hero__subtitle">MiCita funciona 24/7. Responde en segundos. Confirma citas automáticamente. Ideal para peluquerías, spas, barberías, centros de estética y cualquier negocio que trabaje con reservas.</p>
           <div class="hero__cta">
             <a href="#contacto" class="btn btn--primary">Agendar reunión</a>
@@ -563,9 +570,9 @@
         </div>
         <div class="demo-container" style="max-width: 360px;">
           <div class="demo-header">
-            <div class="demo-header__avatar">🧙‍♀️</div>
+            <div class="demo-header__avatar"><img src="herminda.png" alt="Herminda" /></div>
             <div>
-              <div class="demo-header__name">MiCita</div>
+              <div class="demo-header__name">Herminda</div>
               <div class="demo-header__status">● En línea</div>
             </div>
           </div>
@@ -747,28 +754,28 @@
 
         if (step === 'greeting') {
           if (text.includes('1') || text.includes('turno') || text.includes('cita')) {
-            botResponse('¿Qué servicio querés? 👇\n\na) Masaje Relajante (50 min) - $25.000\nb) Limpieza Facial (60 min) - $22.000\nc) Manicura Spa (30 min) - $12.000\nz) 🏠 Volver al menú', ['a', 'b', 'c'], 'service');
+            botResponse('¿Qué servicio te gustaría? ✨👇\n\na) Masaje Relajante (50 min) - $25.000\nb) Limpieza Facial (60 min) - $22.000\nc) Manicura Spa (30 min) - $12.000\nz) 🏠 Volver al menú', ['a', 'b', 'c'], 'service');
           } else if (text.includes('2') || text.includes('servicio')) {
-            botResponse('Estos son nuestros servicios:\n\n• Masaje Relajante (50 min) - $25.000\n• Limpieza Facial (60 min) - $22.000\n• Manicura Spa (30 min) - $12.000\n• Depilación con Cera (40 min) - $18.000\n\n¿Querés sacar un turno?', ['Sí', 'Volver'], 'greeting');
+            botResponse('Estos son nuestros servicios de bienestar:\n\n• Masaje Relajante (50 min) - $25.000\n• Limpieza Facial (60 min) - $22.000\n• Manicura Spa (30 min) - $12.000\n• Depilación con Cera (40 min) - $18.000\n\n¿Te gustaría reservar uno?', ['Sí', 'Volver'], 'greeting');
           } else if (text.includes('3') || text.includes('precio')) {
-            botResponse('Nuestros servicios van de $12.000 a $32.000. Te puedo contar el precio de cualquiera en particular. ¿De cuál querés saber?', ['Masaje', 'Facial', 'Manicura', 'Volver'], 'greeting');
+            botResponse('Nuestros servicios van de $12.000 a $32.000. Te cuento el precio de cualquiera en particular. ¿De cuál querés saber?', ['Masaje', 'Facial', 'Manicura', 'Volver'], 'greeting');
           } else if (text.includes('4') || text.includes('llegar') || text.includes('dire')) {
-            botResponse('Estamos en Av. Santa Fe 1234, CABA.\n\n🚇 Subte D - estación Plaza Italia\n🚌 Colectivos: 12, 39, 60, 118\n\n¿Te ayudo en algo más?', ['Sí, sacar turno', 'No, gracias'], 'greeting');
+            botResponse('Estamos en Av. Santa Fe 1234, CABA. 🌿\n\n🚇 Subte D - estación Plaza Italia\n🚌 Colectivos: 12, 39, 60, 118\n\n¿Te ayudo en algo más?', ['Sí, sacar turno', 'No, gracias'], 'greeting');
           } else if (text.includes('7') || text.includes('humano') || text.includes('persona')) {
             botResponse('Perfecto, te paso con alguien del equipo. Un momento por favor... 🙋‍♀️', null, 'greeting');
           } else {
-            botResponse('¡Hola! ✨ Soy MiCita. ¿En qué puedo ayudarte? 👇\n\n1️⃣ Sacar turno\n2️⃣ Ver servicios\n3️⃣ Consultar precios\n4️⃣ Cómo llegar\n7️⃣ Hablar con humano', ['1', '2', '3', '4'], 'greeting');
+            botResponse('¡Hola! ✨ Soy Herminda, tu guía en este espacio de bienestar. ¿En qué puedo ayudarte hoy? 👇\n\n1️⃣ Sacar turno\n2️⃣ Ver servicios\n3️⃣ Consultar precios\n4️⃣ Cómo llegar\n7️⃣ Hablar con humano', ['1', '2', '3', '4'], 'greeting');
           }
         } else if (step === 'service') {
           if (text === 'a' || text.includes('masaje')) {
             state.service = 'masaje'; state.serviceLabel = 'Masaje Relajante';
-            botResponse('¡Perfecto! 🎉 Vamos a agendar tu Masaje Relajante.\n\n¿Para qué día querés reservar? Podés decirme *hoy*, *mañana*, o un día de la semana.', ['Hoy', 'Mañana', 'Viernes'], 'date');
+            botResponse('¡Excelente elección! 🌙 Vamos a agendar tu momento de relax.\n\n¿Para qué día querés reservar? Podés decirme *hoy*, *mañana*, o un día de la semana.', ['Hoy', 'Mañana', 'Viernes'], 'date');
           } else if (text === 'b' || text.includes('facial')) {
             state.service = 'facial'; state.serviceLabel = 'Limpieza Facial';
-            botResponse('¡Perfecto! 🎉 Vamos a agendar tu Limpieza Facial.\n\n¿Para qué día querés reservar? Podés decirme *hoy*, *mañana*, o un día de la semana.', ['Hoy', 'Mañana', 'Viernes'], 'date');
+            botResponse('¡Excelente elección! 🌿 Vamos a agendar tu momento de cuidado.\n\n¿Para qué día querés reservar? Podés decirme *hoy*, *mañana*, o un día de la semana.', ['Hoy', 'Mañana', 'Viernes'], 'date');
           } else if (text === 'c' || text.includes('manicura')) {
             state.service = 'manicura'; state.serviceLabel = 'Manicura Spa';
-            botResponse('¡Perfecto! 🎉 Vamos a agendar tu Manicura Spa.\n\n¿Para qué día querés reservar? Podés decirme *hoy*, *mañana*, o un día de la semana.', ['Hoy', 'Mañana', 'Viernes'], 'date');
+            botResponse('¡Excelente elección! 💅 Vamos a agendar tu momento de belleza.\n\n¿Para qué día querés reservar? Podés decirme *hoy*, *mañana*, o un día de la semana.', ['Hoy', 'Mañana', 'Viernes'], 'date');
           } else if (text === 'z' || text.includes('menu') || text.includes('volver')) {
             botResponse('¿Deseás volver al menú principal?\n\nResponde *Sí* para volver o *No* para continuar.', ['Sí', 'No'], 'confirm_menu');
           } else {
@@ -776,9 +783,9 @@
           }
         } else if (step === 'confirm_menu') {
           if (text.includes('si') || text.includes('sí')) {
-            botResponse('¡Hola! ✨ Soy MiCita. ¿En qué puedo ayudarte? 👇\n\n1️⃣ Sacar turno\n2️⃣ Ver servicios\n3️⃣ Consultar precios\n4️⃣ Cómo llegar\n7️⃣ Hablar con humano', ['1', '2', '3', '4'], 'greeting');
+            botResponse('¡Hola! ✨ Soy Herminda, tu guía en este espacio de bienestar. ¿En qué puedo ayudarte hoy? 👇\n\n1️⃣ Sacar turno\n2️⃣ Ver servicios\n3️⃣ Consultar precios\n4️⃣ Cómo llegar\n7️⃣ Hablar con humano', ['1', '2', '3', '4'], 'greeting');
           } else {
-            botResponse('¿Qué servicio querés? 👇\n\na) Masaje Relajante\nb) Limpieza Facial\nc) Manicura Spa\nz) 🏠 Volver al menú', ['a', 'b', 'c'], 'service');
+            botResponse('¿Qué servicio te gustaría? ✨👇\n\na) Masaje Relajante\nb) Limpieza Facial\nc) Manicura Spa\nz) 🏠 Volver al menú', ['a', 'b', 'c'], 'service');
           }
         } else if (step === 'date') {
           if (text.includes('hoy') || text.includes('mañana') || text.includes('viernes')) {
@@ -791,7 +798,7 @@
           const timeMap = { 'a': '10:00', 'b': '10:30', 'c': '11:00', 'd': '11:30', 'e': '14:00', 'f': '14:30' };
           if (timeMap[text]) {
             state.time = timeMap[text];
-            botResponse('✅ ¡Perfecto! ' + state.date.toLowerCase() + ' a las ' + state.time + '.\n\n¿A nombre de quién hacemos la reserva?', null, 'name');
+            botResponse('✨ ¡Perfecto! ' + state.date.toLowerCase() + ' a las ' + state.time + '.\n\n¿A nombre de quién hacemos la reserva?', null, 'name');
           } else if (text === 'z') {
             botResponse('¿Deseás volver al menú principal?\n\nResponde *Sí* para volver o *No* para continuar.', ['Sí', 'No'], 'confirm_menu');
           } else {
@@ -806,7 +813,7 @@
           }
         } else if (step === 'confirm') {
           if (text.includes('si') || text.includes('sí')) {
-            botResponse('✅ *¡Turno confirmado!*\n\n📅 ' + state.date + ' a las ' + state.time + '\n💆 ' + state.serviceLabel + '\n\n¡Te esperamos! 🎉\n\n¿Necesitás algo más?', ['Sacar otro turno', 'Ver servicios', 'No, gracias'], 'greeting');
+            botResponse('✅ *¡Turno confirmado!* ✨\n\n📅 ' + state.date + ' a las ' + state.time + '\n💆 ' + state.serviceLabel + '\n\n¡Te esperamos! 🌟\n\n¿Necesitás algo más?', ['Sacar otro turno', 'Ver servicios', 'No, gracias'], 'greeting');
           } else {
             botResponse('Turno cancelado. ¿Querés intentar de nuevo? Escribí *turno* cuando quieras.', ['1', '2', '3'], 'greeting');
           }
@@ -818,7 +825,7 @@
 
       // Initial greeting
       setTimeout(() => {
-        botResponse('¡Hola! ✨ Soy MiCita. ¿En qué puedo ayudarte? 👇\n\n1️⃣ Sacar turno\n2️⃣ Ver servicios\n3️⃣ Consultar precios\n4️⃣ Cómo llegar\n7️⃣ Hablar con humano', ['1', '2', '3', '4'], 'greeting');
+        botResponse('¡Hola! ✨ Soy Herminda, tu guía en este espacio de bienestar. ¿En qué puedo ayudarte hoy? 👇\n\n1️⃣ Sacar turno\n2️⃣ Ver servicios\n3️⃣ Consultar precios\n4️⃣ Cómo llegar\n7️⃣ Hablar con humano', ['1', '2', '3', '4'], 'greeting');
       }, delay || 500);
     }
 
