@@ -759,9 +759,21 @@
             <span>Setup en 48 horas. Funciona con tu WhatsApp Business.</span>
           </div>
         </div>
-        <div style="text-align: center;">
-          <div style="font-size: 4rem; margin-bottom: 16px;">📱💬</div>
-          <p style="font-size: 1.1rem; color: var(--text-secondary); max-width: 280px;">Tus clientes escriben por WhatsApp y el bot responde al instante.</p>
+        <div class="demo-container" style="max-width: 360px;">
+          <div class="demo-header">
+            <div class="demo-header__avatar">🧙‍♀️</div>
+            <div>
+              <div class="demo-header__name">MiCita</div>
+              <div class="demo-header__status">● En línea</div>
+            </div>
+          </div>
+          <div class="demo-messages" id="heroMessages"></div>
+          <div class="demo-input-area">
+            <input type="text" class="demo-input" id="heroInput" placeholder="Escribí tu mensaje..." />
+            <button class="demo-send" id="heroSend" aria-label="Enviar">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+            </button>
+          </div>
         </div>
       </div>
     </section>
@@ -894,33 +906,6 @@
             <div class="industry-card__icon">🦷</div>
             <div class="industry-card__title">Consultorios</div>
             <div class="industry-card__desc">Odontología, kinesiología, etc.</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Demo Interactivo -->
-    <section class="section demo-section" id="demo">
-      <div class="container">
-        <div class="section__header">
-          <span class="section__label">Probá antes de decidir</span>
-          <h2 class="section__title">Escribile como si fueras un cliente</h2>
-          <p class="section__subtitle">Esta es una demo del chat. Tocá un botón o escribí tu mensaje para probar el flujo.</p>
-        </div>
-        <div class="demo-container">
-          <div class="demo-header">
-            <div class="demo-header__avatar">🧙‍♀️</div>
-            <div>
-              <div class="demo-header__name">MiCita</div>
-              <div class="demo-header__status">● En línea</div>
-            </div>
-          </div>
-          <div class="demo-messages" id="demoMessages"></div>
-          <div class="demo-input-area">
-            <input type="text" class="demo-input" id="demoInput" placeholder="Escribí tu mensaje..." />
-            <button class="demo-send" id="demoSend" aria-label="Enviar">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>
-            </button>
           </div>
         </div>
       </div>
@@ -1136,7 +1121,7 @@
       }, delay || 500);
     }
 
-    createWidget('demoMessages', 'demoInput', 'demoSend', 800);
+    createWidget('heroMessages', 'heroInput', 'heroSend', 800);
   </script>
 </body>
 </html>
