@@ -548,6 +548,145 @@
       color: var(--text-secondary);
     }
 
+    /* Demo Widget */
+    .demo-section { background: var(--bg-body); }
+    .demo-container {
+      max-width: 480px;
+      margin: 0 auto;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .demo-header {
+      background: var(--accent-light);
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .demo-header__avatar {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      background: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+    }
+    .demo-header__name {
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+    .demo-header__status {
+      font-size: 0.8rem;
+      color: #22c55e;
+    }
+    .demo-messages {
+      height: 400px;
+      overflow-y: auto;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .demo-msg {
+      padding: 10px 14px;
+      border-radius: 14px;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      max-width: 85%;
+      animation: popIn 0.4s ease both;
+    }
+    .demo-msg--bot {
+      background: var(--accent-light);
+      align-self: flex-start;
+      border-bottom-left-radius: 4px;
+    }
+    .demo-msg--user {
+      background: var(--bg-body);
+      align-self: flex-end;
+      border: 1px solid var(--border);
+      border-bottom-right-radius: 4px;
+    }
+    .demo-msg--typing {
+      display: flex;
+      gap: 4px;
+      padding: 12px 16px;
+      background: var(--accent-light);
+      border-radius: 14px;
+      border-bottom-left-radius: 4px;
+      align-self: flex-start;
+      width: 56px;
+    }
+    .demo-msg--typing span {
+      width: 6px; height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: typingBounce 1.4s infinite ease-in-out;
+    }
+    .demo-msg--typing span:nth-child(2) { animation-delay: 0.2s; }
+    .demo-msg--typing span:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes typingBounce {
+      0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+      40% { transform: scale(1); opacity: 1; }
+    }
+    .demo-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 4px;
+    }
+    .demo-chip {
+      padding: 6px 12px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .demo-chip:hover {
+      border-color: var(--accent);
+      background: var(--accent-light);
+    }
+    .demo-input-area {
+      display: flex;
+      gap: 8px;
+      padding: 12px 16px;
+      border-top: 1px solid var(--border);
+      background: var(--bg-card);
+    }
+    .demo-input {
+      flex: 1;
+      padding: 10px 14px;
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      font-size: 0.9rem;
+      outline: none;
+      background: var(--bg-body);
+    }
+    .demo-input:focus { border-color: var(--accent); }
+    .demo-send {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .demo-send:hover { background: var(--accent-hover); }
+    @keyframes popIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
     /* WhatsApp Float */
     .whatsapp-float {
       position: fixed;
@@ -612,7 +751,7 @@
           <p class="hero__subtitle">MiCita funciona 24/7. Responde en segundos. Confirma citas automáticamente. Ideal para peluquerías, spas, barberías, centros de estética y cualquier negocio que trabaje con reservas.</p>
           <div class="hero__cta">
             <a href="#contacto" class="btn btn--primary">Quiero una demo</a>
-            <a href="#como-funciona" class="btn btn--secondary">Ver cómo funciona</a>
+            <a href="#demo" class="btn btn--secondary">Probar demo</a>
           </div>
           <div class="hero__phone">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
@@ -772,6 +911,33 @@
       </div>
     </section>
 
+    <!-- Demo Interactivo -->
+    <section class="section demo-section" id="demo">
+      <div class="container">
+        <div class="section__header">
+          <span class="section__label">Probá antes de decidir</span>
+          <h2 class="section__title">Escribile como si fueras un cliente</h2>
+          <p class="section__subtitle">Esta es una demo del chat. Escribí "Hola" o tocá un botón para probar el flujo.</p>
+        </div>
+        <div class="demo-container">
+          <div class="demo-header">
+            <div class="demo-header__avatar">🧙‍♀️</div>
+            <div>
+              <div class="demo-header__name">MiCita</div>
+              <div class="demo-header__status">● En línea</div>
+            </div>
+          </div>
+          <div class="demo-messages" id="demoMessages"></div>
+          <div class="demo-input-area">
+            <input type="text" class="demo-input" id="demoInput" placeholder="Escribí tu mensaje..." />
+            <button class="demo-send" id="demoSend" aria-label="Enviar">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Sobre mí -->
     <section class="section" id="sobre-mi" style="background: var(--bg-body);">
       <div class="container">
@@ -822,11 +988,140 @@
   </a>
 
   <script>
+    // Header scroll
     document.getElementById('year').textContent = new Date().getFullYear();
     const header = document.getElementById('header');
     window.addEventListener('scroll', () => {
       header.classList.toggle('scrolled', window.scrollY > 50);
     });
+
+    // Demo Widget
+    (function() {
+      const messagesEl = document.getElementById('demoMessages');
+      const inputEl = document.getElementById('demoInput');
+      const sendEl = document.getElementById('demoSend');
+      let step = 'greeting';
+
+      function addMsg(text, isBot) {
+        const div = document.createElement('div');
+        div.className = 'demo-msg demo-msg--' + (isBot ? 'bot' : 'user');
+        div.textContent = text;
+        messagesEl.appendChild(div);
+        messagesEl.scrollTop = messagesEl.scrollHeight;
+      }
+
+      function addTyping() {
+        const div = document.createElement('div');
+        div.className = 'demo-msg--typing';
+        div.innerHTML = '<span></span><span></span><span></span>';
+        messagesEl.appendChild(div);
+        messagesEl.scrollTop = messagesEl.scrollHeight;
+        return div;
+      }
+
+      function addChips(options) {
+        const div = document.createElement('div');
+        div.className = 'demo-chips';
+        div.style.alignSelf = 'flex-start';
+        options.forEach(opt => {
+          const chip = document.createElement('button');
+          chip.className = 'demo-chip';
+          chip.textContent = opt;
+          chip.addEventListener('click', () => {
+            inputEl.value = opt;
+            handleSend();
+          });
+          div.appendChild(chip);
+        });
+        messagesEl.appendChild(div);
+        messagesEl.scrollTop = messagesEl.scrollHeight;
+      }
+
+      function botResponse(text, chips, nextStep) {
+        const typing = addTyping();
+        setTimeout(() => {
+          typing.remove();
+          addMsg(text, true);
+          if (chips) addChips(chips);
+          if (nextStep) step = nextStep;
+        }, 700);
+      }
+
+      function handleSend() {
+        const text = inputEl.value.trim().toLowerCase();
+        if (!text) return;
+        addMsg(inputEl.value, false);
+        inputEl.value = '';
+
+        if (step === 'greeting') {
+          if (text.includes('1') || text.includes('turno') || text.includes('cita')) {
+            botResponse('¿Qué servicio querés? 👇\n\na) Masaje Relajante (50 min) - $25.000\nb) Limpieza Facial (60 min) - $22.000\nc) Manicura Spa (30 min) - $12.000\nz) 🏠 Volver al menú', ['a', 'b', 'c'], 'service');
+          } else if (text.includes('2') || text.includes('servicio')) {
+            botResponse('Estos son nuestros servicios:\n\n• Masaje Relajante (50 min) - $25.000\n• Limpieza Facial (60 min) - $22.000\n• Manicura Spa (30 min) - $12.000\n• Depilación con Cera (40 min) - $18.000\n\n¿Querés sacar un turno?', ['Sí', 'Volver'], 'greeting');
+          } else if (text.includes('3') || text.includes('precio')) {
+            botResponse('Nuestros servicios van de $12.000 a $32.000. Te puedo contar el precio de cualquiera en particular. ¿De cuál querés saber?', ['Masaje', 'Facial', 'Manicura', 'Volver'], 'greeting');
+          } else if (text.includes('4') || text.includes('llegar') || text.includes('dire')) {
+            botResponse('Estamos en Av. Santa Fe 1234, CABA.\n\n🚇 Subte D - estación Plaza Italia\n🚌 Colectivos: 12, 39, 60, 118\n\n¿Te ayudo en algo más?', ['Sí, sacar turno', 'No, gracias'], 'greeting');
+          } else if (text.includes('7') || text.includes('humano') || text.includes('persona')) {
+            botResponse('Perfecto, te paso con alguien del equipo. Un momento por favor... 🙋‍♀️', null, 'greeting');
+          } else {
+            botResponse('¡Hola! ✨ Soy MiCita. ¿En qué puedo ayudarte? 👇\n\n1️⃣ Sacar turno\n2️⃣ Ver servicios\n3️⃣ Consultar precios\n4️⃣ Cómo llegar\n5️⃣ Mis turnos\n6️⃣ Cancelar turno\n7️⃣ Hablar con humano', ['1', '2', '3', '4'], 'greeting');
+          }
+        } else if (step === 'service') {
+          if (text === 'a' || text.includes('masaje')) {
+            botResponse('¡Perfecto! 🎉 Vamos a agendar tu Masaje Relajante.\n\n¿Para qué día querés reservar? Podés decirme *hoy*, *mañana*, o un día de la semana.', ['Hoy', 'Mañana', 'Viernes'], 'date');
+          } else if (text === 'b' || text.includes('facial')) {
+            botResponse('¡Perfecto! 🎉 Vamos a agendar tu Limpieza Facial.\n\n¿Para qué día querés reservar? Podés decirme *hoy*, *mañana*, o un día de la semana.', ['Hoy', 'Mañana', 'Viernes'], 'date');
+          } else if (text === 'c' || text.includes('manicura')) {
+            botResponse('¡Perfecto! 🎉 Vamos a agendar tu Manicura Spa.\n\n¿Para qué día querés reservar? Podés decirme *hoy*, *mañana*, o un día de la semana.', ['Hoy', 'Mañana', 'Viernes'], 'date');
+          } else if (text === 'z' || text.includes('menu') || text.includes('volver')) {
+            botResponse('¿Deseás volver al menú principal?\n\nResponde *Sí* para volver o *No* para continuar.', ['Sí', 'No'], 'confirm_menu');
+          } else {
+            botResponse('No entendí. Estas son las opciones:\n\na) Masaje Relajante\nb) Limpieza Facial\nc) Manicura Spa\nz) 🏠 Volver al menú', ['a', 'b', 'c'], 'service');
+          }
+        } else if (step === 'confirm_menu') {
+          if (text.includes('si') || text.includes('sí')) {
+            botResponse('¡Hola! ✨ Soy MiCita. ¿En qué puedo ayudarte? 👇\n\n1️⃣ Sacar turno\n2️⃣ Ver servicios\n3️⃣ Consultar precios\n4️⃣ Cómo llegar\n5️⃣ Mis turnos\n6️⃣ Cancelar turno\n7️⃣ Hablar con humano', ['1', '2', '3'], 'greeting');
+          } else {
+            botResponse('¿Qué servicio querés? 👇\n\na) Masaje Relajante\nb) Limpieza Facial\nc) Manicura Spa\nz) 🏠 Volver al menú', ['a', 'b', 'c'], 'service');
+          }
+        } else if (step === 'date') {
+          if (text.includes('hoy') || text.includes('mañana') || text.includes('viernes')) {
+            botResponse('📅 Horarios disponibles para mañana:\n\na) 10:00\nb) 10:30\nc) 11:00\nd) 11:30\ne) 14:00\nf) 14:30\nz) 🏠 Volver al menú\n\n¿Qué horario preferís?', ['a', 'b', 'c'], 'time');
+          } else {
+            botResponse('No entendí la fecha. ¿Podés decirme *hoy*, *mañana*, o un día de la semana?', ['Hoy', 'Mañana', 'Viernes'], 'date');
+          }
+        } else if (step === 'time') {
+          if (['a','b','c','d','e','f'].includes(text) || text.includes('10') || text.includes('11') || text.includes('14')) {
+            botResponse('✅ ¡Perfecto! mañana a las 10:00.\n\n¿A nombre de quién hacemos la reserva?', null, 'name');
+          } else if (text === 'z') {
+            botResponse('¿Deseás volver al menú principal?\n\nResponde *Sí* para volver o *No* para continuar.', ['Sí', 'No'], 'confirm_menu');
+          } else {
+            botResponse('El horario no está disponible. 😔\n\nEstos son los disponibles:\n\na) 10:00\nb) 10:30\nc) 11:00\nd) 11:30\ne) 14:00\nf) 14:30\n\n¿Cuál preferís?', ['a', 'b', 'c'], 'time');
+          }
+        } else if (step === 'name') {
+          if (text.length > 2) {
+            botResponse('📋 *Resumen de tu turno:*\n\n📅 Mañana a las 10:00\n💆 Masaje Relajante (50 min)\n👤 ' + text.charAt(0).toUpperCase() + text.slice(1) + '\n\n¿Confirmamos? Responde *Sí* para confirmar o *No* para cambiar algo.', ['Sí', 'No'], 'confirm');
+          } else {
+            botResponse('¿Podés decirme tu nombre y apellido para la reserva?', null, 'name');
+          }
+        } else if (step === 'confirm') {
+          if (text.includes('si') || text.includes('sí')) {
+            botResponse('✅ *¡Turno confirmado!*\n\n📅 Mañana a las 10:00\n💆 Masaje Relajante\n\n¡Te esperamos! 🎉\n\n¿Necesitás algo más?', ['Sacar otro turno', 'Ver servicios', 'No, gracias'], 'greeting');
+          } else {
+            botResponse('Turno cancelado. ¿Querés intentar de nuevo? Escribí *turno* cuando quieras.', ['1', 'Hola'], 'greeting');
+          }
+        }
+      }
+
+      sendEl.addEventListener('click', handleSend);
+      inputEl.addEventListener('keydown', (e) => { if (e.key === 'Enter') handleSend(); });
+
+      // Initial greeting
+      setTimeout(() => {
+        botResponse('¡Hola! ✨ Soy MiCita. ¿En qué puedo ayudarte? 👇\n\n1️⃣ Sacar turno\n2️⃣ Ver servicios\n3️⃣ Consultar precios\n4️⃣ Cómo llegar\n5️⃣ Mis turnos\n6️⃣ Cancelar turno\n7️⃣ Hablar con humano', ['1', '2', '3', 'Hola'], 'greeting');
+      }, 500);
+    })();
   </script>
 </body>
 </html>
