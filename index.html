@@ -599,6 +599,7 @@
       line-height: 1.5;
       max-width: 85%;
       animation: popIn 0.4s ease both;
+      white-space: pre-wrap;
     }
     .demo-msg--bot {
       background: var(--accent-light);
@@ -758,22 +759,21 @@
             <span>Setup en 48 horas. Funciona con tu WhatsApp Business.</span>
           </div>
         </div>
-        <div class="hero__phone-preview">
-          <div class="hero__phone-header">
-            <div class="hero__phone-avatar">🧙‍♀️</div>
+        <div class="demo-container" style="max-width: 360px;">
+          <div class="demo-header">
+            <div class="demo-header__avatar">🧙‍♀️</div>
             <div>
-              <div class="hero__phone-name">MiCita</div>
-              <div class="hero__phone-status">● En línea</div>
+              <div class="demo-header__name">MiCita</div>
+              <div class="demo-header__status">● En línea</div>
             </div>
           </div>
-          <div class="chat-bubble">Hola, quiero sacar turno para mañana</div>
-          <div class="chat-bubble chat-bubble--bot">¡Hola! ✨ Soy MiCita. ¿En qué puedo ayudarte? 👇</div>
-          <div class="chat-bubble chat-bubble--menu">
-            <strong>1️⃣ Sacar turno</strong>
-            <div>2️⃣ Ver servicios<br>3️⃣ Consultar precios<br>4️⃣ Cómo llegar<br>5️⃣ Mis turnos<br>6️⃣ Cancelar turno<br>7️⃣ Hablar con humano</div>
+          <div class="demo-messages" id="heroMessages"></div>
+          <div class="demo-input-area">
+            <input type="text" class="demo-input" id="heroInput" placeholder="Escribí tu mensaje..." />
+            <button class="demo-send" id="heroSend" aria-label="Enviar">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+            </button>
           </div>
-          <div class="chat-bubble">1</div>
-          <div class="chat-bubble chat-bubble--bot">¿Qué servicio querés? 👇<br>a) Masaje Relajante<br>b) Limpieza Facial<br>c) Manicura Spa<br>z) 🏠 Volver al menú</div>
         </div>
       </div>
     </section>
@@ -995,12 +995,14 @@
       header.classList.toggle('scrolled', window.scrollY > 50);
     });
 
-    // Demo Widget
-    (function() {
-      const messagesEl = document.getElementById('demoMessages');
-      const inputEl = document.getElementById('demoInput');
-      const sendEl = document.getElementById('demoSend');
+    // Widget Factory
+    function createWidget(messagesId, inputId, sendId, delay) {
+      const messagesEl = document.getElementById(messagesId);
+      const inputEl = document.getElementById(inputId);
+      const sendEl = document.getElementById(sendId);
       let step = 'greeting';
+      let state = { service: '', serviceLabel: '', date: '', time: '' };
+      let isTyping = false;
 
       function addMsg(text, isBot) {
         const div = document.createElement('div');
@@ -1019,7 +1021,12 @@
         return div;
       }
 
+      function clearChips() {
+        messagesEl.querySelectorAll('.demo-chips').forEach(el => el.remove());
+      }
+
       function addChips(options) {
+        clearChips();
         const div = document.createElement('div');
         div.className = 'demo-chips';
         div.style.alignSelf = 'flex-start';
@@ -1028,6 +1035,7 @@
           chip.className = 'demo-chip';
           chip.textContent = opt;
           chip.addEventListener('click', () => {
+            if (isTyping) return;
             inputEl.value = opt;
             handleSend();
           });
@@ -1037,21 +1045,31 @@
         messagesEl.scrollTop = messagesEl.scrollHeight;
       }
 
+      function setInputEnabled(enabled) {
+        inputEl.disabled = !enabled;
+        sendEl.disabled = !enabled;
+        isTyping = !enabled;
+      }
+
       function botResponse(text, chips, nextStep) {
+        setInputEnabled(false);
         const typing = addTyping();
         setTimeout(() => {
           typing.remove();
           addMsg(text, true);
           if (chips) addChips(chips);
           if (nextStep) step = nextStep;
+          setInputEnabled(true);
         }, 700);
       }
 
       function handleSend() {
+        if (isTyping) return;
         const text = inputEl.value.trim().toLowerCase();
         if (!text) return;
         addMsg(inputEl.value, false);
         inputEl.value = '';
+        clearChips();
 
         if (step === 'greeting') {
           if (text.includes('1') || text.includes('turno') || text.includes('cita')) {
@@ -1065,14 +1083,17 @@
           } else if (text.includes('7') || text.includes('humano') || text.includes('persona')) {
             botResponse('Perfecto, te paso con alguien del equipo. Un momento por favor... 🙋‍♀️', null, 'greeting');
           } else {
-            botResponse('¡Hola! ✨ Soy MiCita. ¿En qué puedo ayudarte? 👇\n\n1️⃣ Sacar turno\n2️⃣ Ver servicios\n3️⃣ Consultar precios\n4️⃣ Cómo llegar\n5️⃣ Mis turnos\n6️⃣ Cancelar turno\n7️⃣ Hablar con humano', ['1', '2', '3', '4'], 'greeting');
+            botResponse('¡Hola! ✨ Soy MiCita. ¿En qué puedo ayudarte? 👇\n\n1️⃣ Sacar turno\n2️⃣ Ver servicios\n3️⃣ Consultar precios\n4️⃣ Cómo llegar\n7️⃣ Hablar con humano', ['1', '2', '3', '4'], 'greeting');
           }
         } else if (step === 'service') {
           if (text === 'a' || text.includes('masaje')) {
+            state.service = 'masaje'; state.serviceLabel = 'Masaje Relajante';
             botResponse('¡Perfecto! 🎉 Vamos a agendar tu Masaje Relajante.\n\n¿Para qué día querés reservar? Podés decirme *hoy*, *mañana*, o un día de la semana.', ['Hoy', 'Mañana', 'Viernes'], 'date');
           } else if (text === 'b' || text.includes('facial')) {
+            state.service = 'facial'; state.serviceLabel = 'Limpieza Facial';
             botResponse('¡Perfecto! 🎉 Vamos a agendar tu Limpieza Facial.\n\n¿Para qué día querés reservar? Podés decirme *hoy*, *mañana*, o un día de la semana.', ['Hoy', 'Mañana', 'Viernes'], 'date');
           } else if (text === 'c' || text.includes('manicura')) {
+            state.service = 'manicura'; state.serviceLabel = 'Manicura Spa';
             botResponse('¡Perfecto! 🎉 Vamos a agendar tu Manicura Spa.\n\n¿Para qué día querés reservar? Podés decirme *hoy*, *mañana*, o un día de la semana.', ['Hoy', 'Mañana', 'Viernes'], 'date');
           } else if (text === 'z' || text.includes('menu') || text.includes('volver')) {
             botResponse('¿Deseás volver al menú principal?\n\nResponde *Sí* para volver o *No* para continuar.', ['Sí', 'No'], 'confirm_menu');
@@ -1081,33 +1102,37 @@
           }
         } else if (step === 'confirm_menu') {
           if (text.includes('si') || text.includes('sí')) {
-            botResponse('¡Hola! ✨ Soy MiCita. ¿En qué puedo ayudarte? 👇\n\n1️⃣ Sacar turno\n2️⃣ Ver servicios\n3️⃣ Consultar precios\n4️⃣ Cómo llegar\n5️⃣ Mis turnos\n6️⃣ Cancelar turno\n7️⃣ Hablar con humano', ['1', '2', '3'], 'greeting');
+            botResponse('¡Hola! ✨ Soy MiCita. ¿En qué puedo ayudarte? 👇\n\n1️⃣ Sacar turno\n2️⃣ Ver servicios\n3️⃣ Consultar precios\n4️⃣ Cómo llegar\n7️⃣ Hablar con humano', ['1', '2', '3', '4'], 'greeting');
           } else {
             botResponse('¿Qué servicio querés? 👇\n\na) Masaje Relajante\nb) Limpieza Facial\nc) Manicura Spa\nz) 🏠 Volver al menú', ['a', 'b', 'c'], 'service');
           }
         } else if (step === 'date') {
           if (text.includes('hoy') || text.includes('mañana') || text.includes('viernes')) {
-            botResponse('📅 Horarios disponibles para mañana:\n\na) 10:00\nb) 10:30\nc) 11:00\nd) 11:30\ne) 14:00\nf) 14:30\nz) 🏠 Volver al menú\n\n¿Qué horario preferís?', ['a', 'b', 'c'], 'time');
+            state.date = text.includes('hoy') ? 'Hoy' : (text.includes('viernes') ? 'Viernes' : 'Mañana');
+            botResponse('📅 Horarios disponibles para ' + state.date.toLowerCase() + ':\n\na) 10:00\nb) 10:30\nc) 11:00\nd) 11:30\ne) 14:00\nf) 14:30\nz) 🏠 Volver al menú\n\n¿Qué horario preferís?', ['a', 'b', 'c', 'd', 'e', 'f'], 'time');
           } else {
             botResponse('No entendí la fecha. ¿Podés decirme *hoy*, *mañana*, o un día de la semana?', ['Hoy', 'Mañana', 'Viernes'], 'date');
           }
         } else if (step === 'time') {
-          if (['a','b','c','d','e','f'].includes(text) || text.includes('10') || text.includes('11') || text.includes('14')) {
-            botResponse('✅ ¡Perfecto! mañana a las 10:00.\n\n¿A nombre de quién hacemos la reserva?', null, 'name');
+          const timeMap = { 'a': '10:00', 'b': '10:30', 'c': '11:00', 'd': '11:30', 'e': '14:00', 'f': '14:30' };
+          if (timeMap[text]) {
+            state.time = timeMap[text];
+            botResponse('✅ ¡Perfecto! ' + state.date.toLowerCase() + ' a las ' + state.time + '.\n\n¿A nombre de quién hacemos la reserva?', null, 'name');
           } else if (text === 'z') {
             botResponse('¿Deseás volver al menú principal?\n\nResponde *Sí* para volver o *No* para continuar.', ['Sí', 'No'], 'confirm_menu');
           } else {
-            botResponse('El horario no está disponible. 😔\n\nEstos son los disponibles:\n\na) 10:00\nb) 10:30\nc) 11:00\nd) 11:30\ne) 14:00\nf) 14:30\n\n¿Cuál preferís?', ['a', 'b', 'c'], 'time');
+            botResponse('El horario no está disponible. 😔\n\nEstos son los disponibles:\n\na) 10:00\nb) 10:30\nc) 11:00\nd) 11:30\ne) 14:00\nf) 14:30\n\n¿Cuál preferís?', ['a', 'b', 'c', 'd', 'e', 'f'], 'time');
           }
         } else if (step === 'name') {
           if (text.length > 2) {
-            botResponse('📋 *Resumen de tu turno:*\n\n📅 Mañana a las 10:00\n💆 Masaje Relajante (50 min)\n👤 ' + text.charAt(0).toUpperCase() + text.slice(1) + '\n\n¿Confirmamos? Responde *Sí* para confirmar o *No* para cambiar algo.', ['Sí', 'No'], 'confirm');
+            const name = text.charAt(0).toUpperCase() + text.slice(1);
+            botResponse('📋 *Resumen de tu turno:*\n\n📅 ' + state.date + ' a las ' + state.time + '\n💆 ' + state.serviceLabel + '\n👤 ' + name + '\n\n¿Confirmamos? Responde *Sí* para confirmar o *No* para cambiar algo.', ['Sí', 'No'], 'confirm');
           } else {
             botResponse('¿Podés decirme tu nombre y apellido para la reserva?', null, 'name');
           }
         } else if (step === 'confirm') {
           if (text.includes('si') || text.includes('sí')) {
-            botResponse('✅ *¡Turno confirmado!*\n\n📅 Mañana a las 10:00\n💆 Masaje Relajante\n\n¡Te esperamos! 🎉\n\n¿Necesitás algo más?', ['Sacar otro turno', 'Ver servicios', 'No, gracias'], 'greeting');
+            botResponse('✅ *¡Turno confirmado!*\n\n📅 ' + state.date + ' a las ' + state.time + '\n💆 ' + state.serviceLabel + '\n\n¡Te esperamos! 🎉\n\n¿Necesitás algo más?', ['Sacar otro turno', 'Ver servicios', 'No, gracias'], 'greeting');
           } else {
             botResponse('Turno cancelado. ¿Querés intentar de nuevo? Escribí *turno* cuando quieras.', ['1', 'Hola'], 'greeting');
           }
@@ -1119,9 +1144,12 @@
 
       // Initial greeting
       setTimeout(() => {
-        botResponse('¡Hola! ✨ Soy MiCita. ¿En qué puedo ayudarte? 👇\n\n1️⃣ Sacar turno\n2️⃣ Ver servicios\n3️⃣ Consultar precios\n4️⃣ Cómo llegar\n5️⃣ Mis turnos\n6️⃣ Cancelar turno\n7️⃣ Hablar con humano', ['1', '2', '3', 'Hola'], 'greeting');
-      }, 500);
-    })();
+        botResponse('¡Hola! ✨ Soy MiCita. ¿En qué puedo ayudarte? 👇\n\n1️⃣ Sacar turno\n2️⃣ Ver servicios\n3️⃣ Consultar precios\n4️⃣ Cómo llegar\n7️⃣ Hablar con humano', ['1', '2', '3', 'Hola'], 'greeting');
+      }, delay || 500);
+    }
+
+    createWidget('heroMessages', 'heroInput', 'heroSend', 600);
+    createWidget('demoMessages', 'demoInput', 'demoSend', 800);
   </script>
 </body>
 </html>
