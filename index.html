@@ -182,6 +182,33 @@
       gap: 16px;
       flex-wrap: wrap;
     }
+    .hero__trust {
+      margin-top: 24px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+    .trust-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(196,154,108,0.1);
+      color: var(--text-secondary);
+      padding: 8px 14px;
+      border-radius: 100px;
+      font-weight: 500;
+    }
+    .hero__price {
+      margin-top: 16px;
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+    }
+    .hero__price strong {
+      color: var(--text-primary);
+      font-weight: 700;
+    }
     .hero__phone {
       margin-top: 32px;
       display: flex;
@@ -358,6 +385,61 @@
     }
     .footer__copy {
       font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+
+    /* Testimonials */
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .testimonial-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px;
+      box-shadow: var(--shadow);
+    }
+    .testimonial-stars {
+      color: #f59e0b;
+      font-size: 1.2rem;
+      letter-spacing: 2px;
+      margin-bottom: 16px;
+    }
+    .testimonial-text {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 24px;
+      font-style: italic;
+    }
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .testimonial-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+    .testimonial-name {
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--text-primary);
+    }
+    .testimonial-role {
+      font-size: 0.85rem;
       color: var(--text-secondary);
     }
 
@@ -541,6 +623,7 @@
       .steps-grid { grid-template-columns: repeat(2, 1fr); }
       .step-card:not(:last-child)::after { display: none; }
       .step-card:nth-child(2)::after { display: none; }
+      .testimonials-grid { grid-template-columns: 1fr; }
     }
     @media (max-width: 768px) {
       .hero__title { font-size: 2.2rem; }
@@ -581,7 +664,7 @@
         <div class="logo__icon">🗓️</div>
         <span>MiCita</span>
       </a>
-      <a href="#contacto" class="btn btn--small btn--primary">Agendar reunión</a>
+      <a href="https://wa.me/5492477614405" class="btn btn--small btn--primary" data-whatsapp-cta>Quiero mi secretaria virtual</a>
     </div>
   </header>
 
@@ -590,17 +673,21 @@
     <section class="hero" id="hero">
       <div class="container hero__container">
         <div>
-          <h1 class="hero__title">Tus clientes agendan <span>citas por WhatsApp</span> sin que vos hagas nada.</h1>
-          <p style="font-size: 1rem; color: var(--accent); font-weight: 500; margin-bottom: 8px;">✨ Con Herminda, tu secretaria virtual</p>
-          <p class="hero__subtitle">MiCita funciona 24/7. Responde en segundos. Confirma citas automáticamente. Ideal para peluquerías, spas, barberías, centros de estética y cualquier negocio que trabaje con reservas.</p>
+          <h1 class="hero__title">Dejá de perder clientes por <span>no responder WhatsApp</span> a tiempo.</h1>
+          <p class="hero__subtitle">MiCita es tu secretaria virtual. Atiende consultas, responde preguntas frecuentes y agenda citas automáticamente, las 24 horas, mientras vos seguís trabajando.</p>
           <div class="hero__cta">
-            <a href="#contacto" class="btn btn--primary">Agendar reunión</a>
-            <a href="https://wa.me/5492477614405?text=Hola%20Rodrigo%2C%20vi%20MiCita%20y%20quiero%20consultar" class="btn btn--secondary">Consultar por WhatsApp</a>
+            <a href="https://wa.me/5492477614405" class="btn btn--primary" data-whatsapp-cta>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+              Quiero mi secretaria virtual
+            </a>
+            <a href="#como-funciona" class="btn btn--secondary">Ver cómo funciona</a>
           </div>
-          <div class="hero__phone">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-            <span>Setup en 48 horas. Funciona con tu WhatsApp Business.</span>
+          <div class="hero__trust">
+            <div class="trust-badge">✓ Reunión gratuita de 20 min</div>
+            <div class="trust-badge">✓ Setup en 48 horas</div>
+            <div class="trust-badge">✓ Sin permanencia</div>
           </div>
+          <p class="hero__price">Plan base: <strong>$200.000 ARS/mes</strong> + $50.000 setup · Primer mes: $250.000 ARS</p>
         </div>
         <div class="demo-container" style="max-width: 360px;">
           <div class="demo-header">
@@ -653,6 +740,40 @@
       </div>
     </section>
 
+    <!-- Testimonios -->
+    <section class="section" id="testimonios" style="background: var(--bg-body);">
+      <div class="container">
+        <div class="section__header">
+          <span class="section__label">Casos reales</span>
+          <h2 class="section__title">Lo que dicen quienes ya usan MiCita</h2>
+        </div>
+        <div class="testimonials-grid">
+          <div class="testimonial-card">
+            <div class="testimonial-stars">★★★★★</div>
+            <p class="testimonial-text">"Antes perdía consultas que llegaban a la noche o el fin de semana. Ahora MiCita responde automáticamente y mis turnos se agendan solos. Recuperé horas de trabajo por semana."</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">M</div>
+              <div>
+                <div class="testimonial-name">María</div>
+                <div class="testimonial-role">Dueña de spa</div>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card">
+            <div class="testimonial-stars">★★★★★</div>
+            <p class="testimonial-text">"Dejé de estar pendiente del celular todo el día. La secretaria virtual atiende por WhatsApp y yo me concentro en atender a mis clientes. La mejor inversión del año."</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">J</div>
+              <div>
+                <div class="testimonial-name">Juan</div>
+                <div class="testimonial-role">Peluquería</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Sobre mí -->
     <section class="section" id="sobre-mi" style="background: var(--bg-body);">
       <div class="container">
@@ -679,13 +800,16 @@
           <p class="section__subtitle">Te muestro en 20 minutos. Si te sirve, lo implementamos. Si no, no pasa nada.</p>
         </div>
         <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
-          <a href="https://wa.me/5492477614405?text=Hola%20Rodrigo%2C%20vi%20MiCita%20y%20quiero%20agendar%20una%20demo" class="btn btn--primary" style="background: #fff; color: var(--accent);">
+          <a href="https://wa.me/5492477614405" class="btn btn--primary" style="background: #fff; color: var(--accent);" data-whatsapp-cta>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
-            Escribime por WhatsApp
+            Quiero mi secretaria virtual
           </a>
           <a href="mailto:rodrigo.desarrollador@gmail.com" class="btn btn--secondary">Mandame un email</a>
         </div>
-        <p style="margin-top: 32px; font-size: 0.9rem; opacity: 0.8;">
+        <p style="margin-top: 24px; font-size: 0.95rem; opacity: 0.9;">
+          Plan base: $200.000 ARS/mes + $50.000 setup · Primer mes: $250.000 ARS
+        </p>
+        <p style="margin-top: 8px; font-size: 0.85rem; opacity: 0.8;">
           También podés escribirme directo al +54 9 2477 614405
         </p>
       </div>
@@ -698,7 +822,7 @@
     </div>
   </footer>
 
-  <a href="https://wa.me/5492477614405?text=Hola%20Rodrigo%2C%20vi%20MiCita%20y%20quiero%20agendar%20una%20demo" class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="Contactar por WhatsApp">
+  <a href="https://wa.me/5492477614405" class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="Contactar por WhatsApp" data-whatsapp-cta>
     <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
   </a>
 
@@ -883,8 +1007,29 @@
         return 'event_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
       }
 
-      // Capture test_event_code from URL for Meta Test Events
+      // Capture fbclid and test_event_code from URL for Meta attribution
+      const fbclid = getQueryParam('fbclid');
       const testEventCode = getQueryParam('test_event_code');
+
+      // Build unified WhatsApp message with fbclid when available
+      function buildWhatsAppHref(baseHref) {
+        const url = new URL(baseHref);
+        let message = 'Hola Rodrigo, vi MiCita y quiero que me cuenten cómo funciona.';
+        if (fbclid) {
+          message += ' (ref: ' + fbclid + ')';
+        }
+        url.searchParams.set('text', message);
+        return url.toString();
+      }
+
+      // Apply unified message to all WhatsApp CTAs
+      document.querySelectorAll('a[href*="wa.me"], [data-whatsapp-cta]').forEach(function(el) {
+        try {
+          el.href = buildWhatsAppHref(el.href);
+        } catch (e) {
+          console.error('[CAPI] Error building WhatsApp href:', e);
+        }
+      });
 
       function trackContact() {
         const eventId = generateEventId();
@@ -904,6 +1049,9 @@
           fbp: getCookie('_fbp'),
           fbc: getCookie('_fbc')
         };
+        if (fbclid) {
+          payload.fbc = 'fb.1.' + Date.now() + '.' + fbclid;
+        }
         if (testEventCode) {
           payload.test_event_code = testEventCode;
         }
