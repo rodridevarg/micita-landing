@@ -874,9 +874,17 @@
         return null;
       }
 
+      function getQueryParam(name) {
+        const params = new URLSearchParams(window.location.search);
+        return params.get(name);
+      }
+
       function generateEventId() {
         return 'event_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
       }
+
+      // Capture test_event_code from URL for Meta Test Events
+      const testEventCode = getQueryParam('test_event_code');
 
       function trackContact() {
         const eventId = generateEventId();
@@ -889,16 +897,21 @@
         }
 
         // Server-side Conversion API event
+        const payload = {
+          event_name: eventName,
+          event_id: eventId,
+          event_source_url: eventSourceUrl,
+          fbp: getCookie('_fbp'),
+          fbc: getCookie('_fbc')
+        };
+        if (testEventCode) {
+          payload.test_event_code = testEventCode;
+        }
+
         fetch('https://micita.asistentebot.com.ar/api/conversion', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            event_name: eventName,
-            event_id: eventId,
-            event_source_url: eventSourceUrl,
-            fbp: getCookie('_fbp'),
-            fbc: getCookie('_fbc')
-          })
+          body: JSON.stringify(payload)
         }).catch(function(err) {
           console.error('[CAPI] Error:', err);
         });
