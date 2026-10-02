@@ -337,18 +337,26 @@
       transform: scale(1.08);
       background: #fff;
     }
-    .video-testimonial__author {
-      padding: 16px 20px;
-      text-align: center;
+    .video-author-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 60px 16px 16px;
+      background: linear-gradient(to top, rgba(0,0,0,0.75), transparent);
+      color: #fff;
+      text-align: left;
+      pointer-events: none;
     }
-    .video-testimonial__name {
+    .video-author-overlay .video-testimonial__name {
       font-weight: 700;
       font-size: 1rem;
-      margin-bottom: 4px;
+      color: #fff;
+      margin-bottom: 2px;
     }
-    .video-testimonial__role {
-      font-size: 0.9rem;
-      color: var(--text-secondary);
+    .video-author-overlay .video-testimonial__role {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.85);
     }
 
     /* Sections */
@@ -731,11 +739,11 @@
             </video>
             <div class="video-overlay" id="heroVideoOverlay">
               <button class="video-play-button" aria-label="Reproducir testimonio">▶</button>
+              <div class="video-author-overlay">
+                <div class="video-testimonial__name">Carlos Rodríguez</div>
+                <div class="video-testimonial__role">Dueño, Boston Uniformes</div>
+              </div>
             </div>
-          </div>
-          <div class="video-testimonial__author">
-            <div class="video-testimonial__name">Carlos Rodríguez</div>
-            <div class="video-testimonial__role">Dueño, Boston Uniformes</div>
           </div>
         </div>
       </div>
