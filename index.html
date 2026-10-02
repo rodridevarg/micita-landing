@@ -11,8 +11,8 @@
   </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MiCita | Agendá citas automáticamente por WhatsApp</title>
-  <meta name="description" content="Tus clientes agendan citas por WhatsApp sin que vos hagas nada. Peluquerías, spas, barberías, centros de estética. Setup en 48 horas." />
+  <title>MiCita | Tu WhatsApp puede atender por vos</title>
+  <meta name="description" content="MiCita responde consultas, informa precios y horarios y agenda turnos automáticamente por WhatsApp, las 24 horas. Descubrí cómo funciona en tu negocio." />
   <meta name="author" content="Rodrigo Rodriguez" />
   <meta name="robots" content="index, follow" />
   <meta name="theme-color" content="#faf8f5" />
@@ -20,11 +20,11 @@
 
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://micita.com.ar" />
-  <meta property="og:title" content="MiCita | Agendá citas automáticamente por WhatsApp" />
-  <meta property="og:description" content="Tus clientes agendan citas por WhatsApp sin que vos hagas nada. Peluquerías, spas, barberías, centros de estética." />
+  <meta property="og:title" content="MiCita | Tu WhatsApp puede atender por vos" />
+  <meta property="og:description" content="MiCita responde consultas, informa precios y horarios y agenda turnos automáticamente por WhatsApp, las 24 horas." />
   <meta property="og:locale" content="es_AR" />
 
-  <meta name="keywords" content="micita, agenda citas whatsapp, bot citas peluqueria, secretaria virtual spa, agendamiento automatico whatsapp, citas barberia, reservas whatsapp" />
+  <meta name="keywords" content="micita, secretaria virtual whatsapp, agenda citas automatica, bot whatsapp negocios, atencion cliente 24/7" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -44,9 +44,11 @@
       --radius-sm: 10px;
       --shadow: 0 10px 40px rgba(0,0,0,0.06);
       --shadow-accent: 0 10px 40px rgba(196,154,108,0.15);
+      --shadow-phone: 0 30px 80px rgba(0,0,0,0.12);
       --transition: all 0.3s ease;
-      --container: 1100px;
-      --header-h: 64px;
+      --container: 1140px;
+      --header-h: 72px;
+      --whatsapp: #25d366;
     }
 
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -68,15 +70,10 @@
       position: fixed;
       top: 0; left: 0; width: 100%; height: var(--header-h);
       z-index: 1000;
-      background: transparent;
-      border-bottom: 1px solid transparent;
-      transition: var(--transition);
-    }
-    .header.scrolled {
-      background: rgba(255, 255, 255, 0.92);
+      background: rgba(250, 248, 245, 0.85);
       backdrop-filter: blur(16px);
-      border-bottom-color: var(--border);
-      box-shadow: 0 2px 20px rgba(0,0,0,0.04);
+      border-bottom: 1px solid var(--border);
+      transition: var(--transition);
     }
     .header .container {
       display: flex;
@@ -86,20 +83,20 @@
     }
     .logo {
       font-weight: 700;
-      font-size: 1.1rem;
+      font-size: 1.2rem;
       color: var(--text-primary);
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
     }
     .logo__icon {
-      width: 32px; height: 32px;
+      width: 36px; height: 36px;
       background: var(--accent);
-      border-radius: 8px;
+      border-radius: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.2rem;
+      font-size: 1.3rem;
     }
 
     /* Buttons */
@@ -107,11 +104,11 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
-      padding: 14px 28px;
-      border-radius: var(--radius-sm);
+      gap: 10px;
+      padding: 16px 28px;
+      border-radius: 100px;
       font-weight: 600;
-      font-size: 0.95rem;
+      font-size: 1rem;
       transition: var(--transition);
       cursor: pointer;
       border: none;
@@ -127,24 +124,35 @@
       transform: translateY(-2px);
       box-shadow: 0 14px 48px rgba(196,154,108,0.28);
     }
-    .btn--secondary {
+    .btn--whatsapp {
+      background: var(--whatsapp);
+      color: #fff;
+      box-shadow: 0 8px 24px rgba(37,211,102,0.3);
+    }
+    .btn--whatsapp:hover {
+      background: #1ebd59;
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(37,211,102,0.4);
+    }
+    .btn--small { padding: 12px 22px; font-size: 0.9rem; }
+    .btn--block { width: 100%; }
+    .btn--outline {
       background: transparent;
       color: var(--text-primary);
       border: 1.5px solid var(--border);
     }
-    .btn--secondary:hover {
+    .btn--outline:hover {
       border-color: var(--accent);
       color: var(--accent);
     }
-    .btn--small { padding: 10px 20px; font-size: 0.9rem; }
-    .btn--block { width: 100%; }
 
     /* Hero */
     .hero {
       min-height: 100vh;
       display: flex;
       align-items: center;
-      padding-top: var(--header-h);
+      padding-top: 40px;
+      padding-bottom: 60px;
       background: linear-gradient(135deg, var(--bg-body) 0%, var(--accent-light) 100%);
       position: relative;
       overflow: hidden;
@@ -152,152 +160,207 @@
     .hero::before {
       content: '';
       position: absolute;
-      top: -20%; right: -10%;
-      width: 500px; height: 500px;
-      background: radial-gradient(circle, rgba(196,154,108,0.08) 0%, transparent 70%);
+      top: -10%; right: -5%;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(196,154,108,0.1) 0%, transparent 70%);
       border-radius: 50%;
     }
     .hero__container {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 64px;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 80px;
       align-items: center;
-      padding: 80px 24px;
+      position: relative;
+      z-index: 1;
+    }
+    .hero__eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(196,154,108,0.12);
+      color: var(--accent-hover);
+      padding: 8px 16px;
+      border-radius: 100px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 24px;
     }
     .hero__title {
-      font-size: 3.2rem;
+      font-size: 3.6rem;
       font-weight: 800;
-      line-height: 1.1;
-      letter-spacing: -0.02em;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
       margin-bottom: 24px;
+      color: var(--text-primary);
     }
     .hero__title span { color: var(--accent); }
     .hero__subtitle {
-      font-size: 1.15rem;
+      font-size: 1.25rem;
       color: var(--text-secondary);
       margin-bottom: 32px;
-      max-width: 480px;
+      max-width: 520px;
+      line-height: 1.7;
+    }
+    .hero__features {
+      display: flex;
+      gap: 24px;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+    }
+    .hero__feature {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+    .hero__feature-icon {
+      width: 36px; height: 36px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
     }
     .hero__cta {
       display: flex;
+      flex-direction: column;
       gap: 16px;
-      flex-wrap: wrap;
+      align-items: flex-start;
+      margin-bottom: 24px;
+    }
+    .hero__cta-main {
+      font-size: 1.15rem;
+      padding: 20px 36px;
+    }
+    .hero__cta-note {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
     .hero__trust {
-      margin-top: 24px;
       display: flex;
+      gap: 12px;
       flex-wrap: wrap;
-      gap: 10px;
-      font-size: 0.85rem;
-      color: var(--text-secondary);
     }
     .trust-badge {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      background: rgba(196,154,108,0.1);
+      gap: 8px;
+      background: var(--bg-card);
       color: var(--text-secondary);
-      padding: 8px 14px;
+      padding: 10px 16px;
       border-radius: 100px;
+      font-size: 0.85rem;
       font-weight: 500;
+      border: 1px solid var(--border);
     }
-    .hero__price {
-      margin-top: 16px;
-      font-size: 0.95rem;
-      color: var(--text-secondary);
-    }
-    .hero__price strong {
-      color: var(--text-primary);
+    .trust-badge::before {
+      content: '✓';
+      color: var(--whatsapp);
       font-weight: 700;
     }
-    .hero__guarantee {
-      margin-top: 14px;
-      font-size: 0.9rem;
-      color: var(--text-secondary);
-      display: flex;
-      align-items: flex-start;
-      gap: 8px;
-      max-width: 480px;
-    }
-    .hero__demo { display: block; }
-    .hero__phone {
-      margin-top: 32px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-size: 0.9rem;
-      color: var(--text-secondary);
-    }
-    .hero__phone-preview {
+
+    /* Video Testimonial Hero */
+    .video-testimonial-card {
+      max-width: 360px;
+      width: 100%;
+      margin: 0 auto;
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 20px;
       box-shadow: var(--shadow);
-      max-width: 340px;
-      position: relative;
+      overflow: hidden;
     }
-    .hero__phone-header {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 16px;
-      padding-bottom: 12px;
+    .video-testimonial__label {
+      display: block;
+      background: var(--accent-light);
+      color: var(--accent-hover);
+      padding: 12px 20px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
       border-bottom: 1px solid var(--border);
     }
-    .hero__phone-avatar {
-      width: 40px; height: 40px;
-      border-radius: 50%;
-      background: var(--accent-light);
+    .video-wrapper {
+      position: relative;
+      background: #000;
+      aspect-ratio: 9 / 16;
+      overflow: hidden;
+      cursor: pointer;
+    }
+    .video-wrapper video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .video-overlay {
+      position: absolute;
+      inset: 0;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.2rem;
+      background: rgba(0,0,0,0.15);
+      transition: opacity 0.3s ease, visibility 0.3s ease;
     }
-    .hero__phone-name {
-      font-weight: 600;
-      font-size: 0.95rem;
+    .video-overlay.is-hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
     }
-    .hero__phone-status {
-      font-size: 0.8rem;
-      color: #22c55e;
+    .video-play-button {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.95);
+      color: var(--accent);
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      padding-left: 6px;
+      cursor: pointer;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+      transition: transform 0.2s ease, background 0.2s ease;
     }
-    .chat-bubble {
-      background: var(--bg-body);
-      border-radius: 14px 14px 14px 4px;
-      padding: 12px 16px;
-      margin-bottom: 8px;
-      font-size: 0.9rem;
-      max-width: 90%;
+    .video-play-button:hover {
+      transform: scale(1.08);
+      background: #fff;
     }
-    .chat-bubble--bot {
-      background: var(--accent-light);
-      border-radius: 14px 14px 4px 14px;
-      margin-left: auto;
-      max-width: 90%;
+    .video-author-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 60px 16px 16px;
+      background: linear-gradient(to top, rgba(0,0,0,0.75), transparent);
+      color: #fff;
+      text-align: left;
+      pointer-events: none;
     }
-    .chat-bubble--menu {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      padding: 16px;
-      margin: 8px 0;
+    .video-author-overlay .video-testimonial__name {
+      font-weight: 700;
+      font-size: 1rem;
+      color: #fff;
+      margin-bottom: 2px;
     }
-    .chat-bubble--menu strong {
-      display: block;
-      margin-bottom: 8px;
-      font-size: 0.95rem;
-    }
-    .chat-bubble--menu div {
-      font-size: 0.9rem;
-      color: var(--text-secondary);
-      line-height: 1.8;
+    .video-author-overlay .video-testimonial__role {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.85);
     }
 
     /* Sections */
-    .section {
-      padding: 100px 0;
-    }
+    .section { padding: 100px 0; }
     .section__header {
       text-align: center;
       max-width: 640px;
@@ -306,22 +369,23 @@
     .section__label {
       display: inline-block;
       font-size: 0.85rem;
-      font-weight: 600;
+      font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.08em;
       color: var(--accent);
       margin-bottom: 16px;
     }
     .section__title {
-      font-size: 2.4rem;
-      font-weight: 700;
+      font-size: 2.6rem;
+      font-weight: 800;
       letter-spacing: -0.02em;
-      line-height: 1.2;
+      line-height: 1.15;
       margin-bottom: 16px;
     }
     .section__subtitle {
-      font-size: 1.1rem;
+      font-size: 1.15rem;
       color: var(--text-secondary);
+      line-height: 1.6;
     }
 
     /* How it works */
@@ -339,10 +403,8 @@
     .step-card:not(:last-child)::after {
       content: '';
       position: absolute;
-      top: 32px;
-      right: -12px;
-      width: 24px;
-      height: 2px;
+      top: 32px; right: -12px;
+      width: 24px; height: 2px;
       background: var(--border);
     }
     .step-card__number {
@@ -365,44 +427,56 @@
     .step-card__desc {
       font-size: 0.9rem;
       color: var(--text-secondary);
+      line-height: 1.6;
     }
 
-    /* CTA Section */
-    .cta-section {
-      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%);
-      color: #fff;
-      padding: 100px 0;
-      text-align: center;
+    /* Benefits */
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      max-width: 900px;
+      margin: 0 auto;
     }
-    .cta-section .section__title,
-    .cta-section .section__subtitle {
-      color: #fff;
-    }
-    .cta-section .btn--secondary {
-      border-color: rgba(255,255,255,0.4);
-      color: #fff;
-    }
-    .cta-section .btn--secondary:hover {
-      background: rgba(255,255,255,0.1);
-      border-color: #fff;
-    }
-
-    /* Footer */
-    .footer {
-      padding: 40px 0;
-      text-align: center;
-      border-top: 1px solid var(--border);
+    .benefit-card {
       background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px;
+      text-align: center;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
     }
-    .footer__copy {
+    .benefit-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.08);
+    }
+    .benefit-card__icon {
+      width: 56px; height: 56px;
+      background: var(--accent-light);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin: 0 auto 16px;
+    }
+    .benefit-card__title {
+      font-weight: 700;
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+    }
+    .benefit-card__desc {
       font-size: 0.9rem;
       color: var(--text-secondary);
+      line-height: 1.6;
     }
 
     /* Testimonials */
     .testimonials-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: minmax(0, 640px);
+      justify-content: center;
       gap: 24px;
       max-width: 900px;
       margin: 0 auto;
@@ -433,8 +507,7 @@
       gap: 12px;
     }
     .testimonial-avatar {
-      width: 44px;
-      height: 44px;
+      width: 44px; height: 44px;
       border-radius: 50%;
       background: var(--accent);
       color: #fff;
@@ -444,200 +517,103 @@
       font-weight: 700;
       font-size: 1.1rem;
     }
-    .testimonial-name {
-      font-weight: 600;
-      font-size: 0.95rem;
-      color: var(--text-primary);
-    }
-    .testimonial-role {
-      font-size: 0.85rem;
-      color: var(--text-secondary);
-    }
-    .testimonial-link {
-      display: block;
-      font-size: 0.8rem;
-      color: var(--accent);
-      margin-top: 2px;
-      user-select: all;
-    }
+    .testimonial-name { font-weight: 600; font-size: 0.95rem; }
+    .testimonial-role { font-size: 0.85rem; color: var(--text-secondary); }
+    .testimonial-link { display: block; font-size: 0.8rem; color: var(--accent); margin-top: 2px; }
 
-    /* Demo Widget */
-    .demo-section { background: var(--bg-body); }
-    @media (min-width: 769px) {
-      #demo { display: none !important; }
-    }
-    @media (max-width: 768px) {
-      #demo { display: block !important; }
-    }
-    .demo-container {
-      max-width: 480px;
-      margin: 0 auto;
+    /* Pricing */
+    .pricing-card {
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: var(--radius);
+      padding: 48px;
+      max-width: 600px;
+      margin: 0 auto;
+      text-align: center;
       box-shadow: var(--shadow);
-      overflow: hidden;
     }
-    .demo-header {
-      background: var(--accent-light);
-      padding: 16px 20px;
+    .pricing-card__price {
+      font-size: 3rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      margin: 16px 0;
+    }
+    .pricing-card__price span {
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+    }
+    .pricing-card__setup {
+      color: var(--text-secondary);
+      margin-bottom: 24px;
+    }
+    .pricing-card__features {
+      text-align: left;
+      max-width: 360px;
+      margin: 0 auto 32px;
+      list-style: none;
+    }
+    .pricing-card__features li {
+      padding: 10px 0;
       border-bottom: 1px solid var(--border);
+      color: var(--text-secondary);
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
     }
-    .demo-header__avatar {
-      width: 40px; height: 40px;
-      border-radius: 50%;
-      overflow: hidden;
-      background: var(--accent);
+    .pricing-card__features li::before {
+      content: '✓';
+      color: var(--whatsapp);
+      font-weight: 700;
+    }
+
+    /* About */
+    .about-card {
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.2rem;
-      border: 2px solid #fff;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-      flex-shrink: 0;
-    }
-    .demo-header__avatar img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center center;
-      display: block;
-    }
-    .demo-header__name {
-      font-weight: 600;
-      font-size: 0.95rem;
-    }
-    .demo-header__status {
-      font-size: 0.8rem;
-      color: #22c55e;
-    }
-    .demo-messages {
-      height: 400px;
-      overflow-y: auto;
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-    .demo-msg {
-      padding: 10px 14px;
-      border-radius: 14px;
-      font-size: 0.9rem;
-      line-height: 1.5;
-      max-width: 85%;
-      animation: popIn 0.4s ease both;
-      white-space: pre-wrap;
-    }
-    .demo-msg--bot {
-      background: var(--accent-light);
-      align-self: flex-start;
-      border-bottom-left-radius: 4px;
-    }
-    .demo-msg--user {
-      background: var(--bg-body);
-      align-self: flex-end;
-      border: 1px solid var(--border);
-      border-bottom-right-radius: 4px;
-    }
-    .demo-msg--typing {
-      display: flex;
-      gap: 4px;
-      padding: 12px 16px;
-      background: var(--accent-light);
-      border-radius: 14px;
-      border-bottom-left-radius: 4px;
-      align-self: flex-start;
-      width: 56px;
-    }
-    .demo-msg--typing span {
-      width: 6px; height: 6px;
-      background: var(--accent);
-      border-radius: 50%;
-      animation: typingBounce 1.4s infinite ease-in-out;
-    }
-    .demo-msg--typing span:nth-child(2) { animation-delay: 0.2s; }
-    .demo-msg--typing span:nth-child(3) { animation-delay: 0.4s; }
-    @keyframes typingBounce {
-      0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
-      40% { transform: scale(1); opacity: 1; }
-    }
-    .demo-chips {
-      display: flex;
+      gap: 32px;
       flex-wrap: wrap;
-      gap: 6px;
-      margin-top: 4px;
+      max-width: 600px;
+      margin: 0 auto;
+      text-align: center;
     }
-    .demo-chip {
-      padding: 6px 12px;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 100px;
-      font-size: 0.85rem;
-      cursor: pointer;
-      transition: var(--transition);
+    .about-card img {
+      width: 140px; height: 140px;
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: var(--shadow);
     }
-    .demo-chip:hover {
-      border-color: var(--accent);
-      background: var(--accent-light);
+
+    /* CTA Section */
+    .cta-section {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%);
+      color: #fff;
+      padding: 100px 0;
+      text-align: center;
     }
-    .demo-input-area {
-      display: flex;
-      gap: 8px;
-      padding: 12px 16px;
+    .cta-section .section__title,
+    .cta-section .section__subtitle { color: #fff; }
+    .cta-section .btn--whatsapp {
+      background: #fff;
+      color: var(--whatsapp);
+      margin-top: 24px;
+    }
+    .cta-section .btn--whatsapp:hover {
+      background: #f0fdf4;
+      transform: translateY(-2px);
+    }
+
+    /* Footer */
+    .footer {
+      padding: 40px 0;
+      text-align: center;
       border-top: 1px solid var(--border);
       background: var(--bg-card);
     }
-    .demo-input {
-      flex: 1;
-      padding: 10px 14px;
-      border: 1px solid var(--border);
-      border-radius: 100px;
+    .footer__copy {
       font-size: 0.9rem;
-      outline: none;
-      background: var(--bg-body);
-    }
-    .demo-input:focus { border-color: var(--accent); }
-    .demo-send {
-      width: 40px; height: 40px;
-      border-radius: 50%;
-      background: var(--accent);
-      color: #fff;
-      border: none;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: var(--transition);
-    }
-    .demo-send:hover { background: var(--accent-hover); }
-    @keyframes popIn {
-      from { opacity: 0; transform: translateY(8px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* WhatsApp Float */
-    .whatsapp-float {
-      position: fixed;
-      bottom: 24px;
-      right: 24px;
-      width: 56px;
-      height: 56px;
-      background: #25d366;
-      color: #fff;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 4px 20px rgba(37,211,102,0.3);
-      transition: var(--transition);
-      z-index: 9999;
-    }
-    .whatsapp-float:hover {
-      transform: scale(1.1);
-      box-shadow: 0 6px 30px rgba(37,211,102,0.4);
+      color: var(--text-secondary);
     }
 
     /* Mobile sticky CTA */
@@ -652,30 +628,45 @@
       border-top: 1px solid var(--border);
       box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
       z-index: 9998;
+      transform: translateY(100%);
+      transition: transform 0.3s ease;
+    }
+    .mobile-cta-bar.is-visible {
+      transform: translateY(0);
     }
 
     /* Responsive */
     @media (max-width: 1024px) {
-      .hero__container { grid-template-columns: 1fr; gap: 48px; }
-      .hero__phone-preview { max-width: 100%; }
+      .hero__container { grid-template-columns: 1fr; gap: 60px; text-align: center; }
+      .hero__title { font-size: 2.8rem; }
+      .hero__subtitle { margin: 0 auto 32px; }
+      .hero__features { justify-content: center; }
+      .hero__cta { align-items: center; }
+      .hero__trust { justify-content: center; }
+      .demo-container { max-width: 340px; }
       .steps-grid { grid-template-columns: repeat(2, 1fr); }
       .step-card:not(:last-child)::after { display: none; }
       .step-card:nth-child(2)::after { display: none; }
+      .benefits-grid { grid-template-columns: repeat(2, 1fr); }
       .testimonials-grid { grid-template-columns: 1fr; }
     }
     @media (max-width: 768px) {
+      .hero { padding-top: 24px; }
       .hero__title { font-size: 2.2rem; }
-      .section__title { font-size: 1.8rem; }
+      .hero__subtitle { font-size: 1.1rem; }
+      .hero__features { flex-direction: column; gap: 12px; align-items: center; }
+      .hero__cta-main { width: 100%; justify-content: center; font-size: 1.05rem; }
+      .hero__trust { flex-direction: column; align-items: center; }
+      .demo-container { max-width: 300px; }
+      .section { padding: 70px 0; }
+      .section__title { font-size: 2rem; }
       .steps-grid { grid-template-columns: 1fr; }
-      .hero__cta { flex-direction: column; }
-      .hero__cta .btn { width: 100%; justify-content: center; }
-      .hero__demo { display: none; }
-      .hero__subtitle { margin-bottom: 24px; }
-      .hero__trust { margin-top: 20px; }
-      .hero__price { margin-top: 14px; }
-      body { padding-bottom: 76px; }
-      .mobile-cta-bar { display: block; }
-      .whatsapp-float { bottom: 88px; right: 16px; width: 48px; height: 48px; }
+      .benefits-grid { grid-template-columns: 1fr; }
+      .pricing-card { padding: 32px 24px; }
+      .pricing-card__price { font-size: 2.4rem; }
+      body { padding-bottom: 90px; }
+      .mobile-cta-bar { display: block; transform: translateY(100%); }
+      .mobile-cta-bar.is-visible { transform: translateY(0); }
     }
   </style>
 
@@ -693,57 +684,66 @@
   fbq('track', 'PageView');
   </script>
   <noscript><img height="1" width="1" style="display:none"
-  src="https://www.facebook.com/tr?id=1242056251208109&ev=PageView&noscript=1"
+    src="https://www.facebook.com/tr?id=1242056251208109&ev=PageView&noscript=1"
   /></noscript>
   <!-- End Meta Pixel Code -->
 </head>
 <body>
-  <header class="header" id="header">
-    <div class="container">
-      <a href="#" class="logo">
-        <div class="logo__icon">🗓️</div>
-        <span>MiCita</span>
-      </a>
-      <a href="https://wa.me/5492233550738" class="btn btn--small btn--primary" data-whatsapp-cta target="_blank" rel="noopener noreferrer">Quiero mi secretaria virtual</a>
-    </div>
-  </header>
-
   <main>
     <!-- Hero -->
     <section class="hero" id="hero">
       <div class="container hero__container">
         <div>
-          <h1 class="hero__title">Dejá de perder clientes por <span>no responder WhatsApp</span> a tiempo.</h1>
-          <p class="hero__subtitle">MiCita es tu secretaria virtual. Atiende consultas, responde preguntas frecuentes y agenda citas automáticamente, las 24 horas, mientras vos seguís trabajando.</p>
-          <div class="hero__cta">
-            <a href="https://wa.me/5492233550738" class="btn btn--primary" data-whatsapp-cta target="_blank" rel="noopener noreferrer">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
-              Quiero mi secretaria virtual
-            </a>
-            <a href="#como-funciona" class="btn btn--secondary">Ver cómo funciona</a>
-          </div>
-          <div class="hero__trust">
-            <div class="trust-badge">✓ Reunión gratuita de 20 min</div>
-            <div class="trust-badge">✓ Setup en 48 horas</div>
-            <div class="trust-badge">✓ Sin permanencia</div>
-          </div>
-          <p class="hero__price">Plan base: <strong>$200.000 ARS/mes</strong> + $50.000 setup | Primer mes: $250.000 ARS</p>
-          <p class="hero__guarantee">🛡️ Garantía de ajuste: te acompañamos hasta que el bot responda exactamente como querés. Sin costo extra.</p>
-        </div>
-        <div class="demo-container hero__demo" style="max-width: 360px;">
-          <div class="demo-header">
-            <div class="demo-header__avatar"><img src="herminda.png" alt="Herminda" /></div>
-            <div>
-              <div class="demo-header__name">Herminda</div>
-              <div class="demo-header__status">● En línea</div>
+          <div class="hero__eyebrow">TU SECRETARIA VIRTUAL POR WHATSAPP</div>
+          <h1 class="hero__title">Tu WhatsApp puede <span>atender por vos.</span></h1>
+          <p class="hero__subtitle">MiCita responde consultas, informa precios y horarios y agenda turnos automáticamente, las 24 horas, mientras vos seguís trabajando.</p>
+
+          <div class="hero__features">
+            <div class="hero__feature">
+              <div class="hero__feature-icon">💬</div>
+              <span>Responde WhatsApp</span>
+            </div>
+            <div class="hero__feature">
+              <div class="hero__feature-icon">📅</div>
+              <span>Agenda turnos</span>
+            </div>
+            <div class="hero__feature">
+              <div class="hero__feature-icon">🕐</div>
+              <span>Atiende 24/7</span>
             </div>
           </div>
-          <div class="demo-messages" id="heroMessages"></div>
-          <div class="demo-input-area">
-            <input type="text" class="demo-input" id="heroInput" placeholder="Escribí tu mensaje..." />
-            <button class="demo-send" id="heroSend" aria-label="Enviar">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>
-            </button>
+
+          <div class="hero__cta">
+            <a href="https://wa.me/5492233550738" class="btn btn--whatsapp hero__cta-main" data-whatsapp-cta target="_blank" rel="noopener noreferrer">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+              Ver cómo funciona
+            </a>
+            <div class="hero__cta-note">
+              <span>⏱️</span>
+              <span>Te mostramos sin cargo</span>
+            </div>
+          </div>
+
+          <div class="hero__trust">
+            <div class="trust-badge">Asesoramiento sin cargo</div>
+            <div class="trust-badge">Setup en 48 horas</div>
+            <div class="trust-badge">Sin permanencia</div>
+          </div>
+        </div>
+
+        <div class="video-testimonial-card hero__demo">
+          <span class="video-testimonial__label">Caso real de cliente</span>
+          <div class="video-wrapper" onclick="playHeroVideo()">
+            <video id="heroVideo" poster="https://media.micita.com.ar/poster_carlos.jpg" preload="none" playsinline>
+              <source src="https://media.micita.com.ar/micita_testimonio_720p.mp4" type="video/mp4">
+            </video>
+            <div class="video-overlay" id="heroVideoOverlay">
+              <button class="video-play-button" aria-label="Reproducir testimonio">▶</button>
+              <div class="video-author-overlay">
+                <div class="video-testimonial__name">Carlos Rodríguez</div>
+                <div class="video-testimonial__role">Dueño, Boston Uniformes</div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -781,61 +781,50 @@
       </div>
     </section>
 
-    <!-- Demo mobile -->
-    <section class="section demo-section" id="demo" style="background: var(--bg-body); display: none;">
+    <!-- Beneficios -->
+    <section class="section" id="beneficios" style="background: var(--bg-body);">
       <div class="container">
         <div class="section__header">
-          <span class="section__label">Vélo en acción</span>
-          <h2 class="section__title">Así atiende MiCita por WhatsApp</h2>
+          <span class="section__label">Beneficios</span>
+          <h2 class="section__title">¿Por qué MiCita?</h2>
         </div>
-        <div class="demo-container" style="max-width: 360px; margin: 0 auto;">
-          <div class="demo-header">
-            <div class="demo-header__avatar"><img src="herminda.png" alt="Herminda" /></div>
-            <div>
-              <div class="demo-header__name">Herminda</div>
-              <div class="demo-header__status">● En línea</div>
-            </div>
+        <div class="benefits-grid">
+          <div class="benefit-card">
+            <div class="benefit-card__icon">⚡</div>
+            <div class="benefit-card__title">Respuesta inmediata</div>
+            <div class="benefit-card__desc">Tus clientes no esperan. MiCita responde al instante, incluso fuera de horario.</div>
           </div>
-          <div class="demo-messages" id="mobileMessages"></div>
-          <div class="demo-input-area">
-            <input type="text" class="demo-input" id="mobileInput" placeholder="Escribí tu mensaje..." />
-            <button class="demo-send" id="mobileSend" aria-label="Enviar">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>
-            </button>
+          <div class="benefit-card">
+            <div class="benefit-card__icon">🎯</div>
+            <div class="benefit-card__title">Más turnos, menos trabajo</div>
+            <div class="benefit-card__desc">Agenda automáticamente las citas en tu calendario sin que vos tengas que intervenir.</div>
+          </div>
+          <div class="benefit-card">
+            <div class="benefit-card__icon">🛡️</div>
+            <div class="benefit-card__title">Sin permanencia</div>
+            <div class="benefit-card__desc">Probá el servicio sin atarte. Si no te sirve, podés cancelar cuando quieras.</div>
           </div>
         </div>
       </div>
     </section>
 
     <!-- Testimonios -->
-    <section class="section" id="testimonios" style="background: var(--bg-body);">
+    <section class="section" id="testimonios" style="background: var(--bg-card);">
       <div class="container">
         <div class="section__header">
-          <span class="section__label">Casos reales</span>
-          <h2 class="section__title">Lo que dicen quienes ya usan MiCita</h2>
+          <span class="section__label">Caso real</span>
+          <h2 class="section__title">"MiCita nos ahorra horas todos los días"</h2>
         </div>
         <div class="testimonials-grid">
           <div class="testimonial-card">
             <div class="testimonial-stars">★★★★★</div>
             <p class="testimonial-text">"En Boston Uniformes recibimos muchas consultas por WhatsApp: talles, stock, envíos y formas de pago. MiCita responde automáticamente las preguntas más frecuentes y los clientes compran más rápido. Nos dio una atención 24/7 sin aumentar el equipo."</p>
             <div class="testimonial-author">
-              <div class="testimonial-avatar">E</div>
+              <div class="testimonial-avatar">C</div>
               <div>
-                <div class="testimonial-name">Eliana Sabas</div>
-                <div class="testimonial-role">Boston Uniformes</div>
+                <div class="testimonial-name">Carlos Rodríguez</div>
+                <div class="testimonial-role">Dueño, Boston Uniformes</div>
                 <span class="testimonial-link">bostonuniformes.com.ar</span>
-              </div>
-            </div>
-          </div>
-          <div class="testimonial-card">
-            <div class="testimonial-stars">★★★★★</div>
-            <p class="testimonial-text">"En Zezen necesitábamos explicar cómo funciona la app para gimnasios y atletas sin depender de que alguien esté respondiendo todo el día. MiCita agenda demos, responde dudas frecuentes y filtra leads. Nos ahorra horas de trabajo todos los días."</p>
-            <div class="testimonial-author">
-              <div class="testimonial-avatar">H</div>
-              <div>
-                <div class="testimonial-name">Horacio Rodríguez</div>
-                <div class="testimonial-role">Zezen</div>
-                <span class="testimonial-link">zezen.app</span>
               </div>
             </div>
           </div>
@@ -843,18 +832,46 @@
       </div>
     </section>
 
+    <!-- Precios -->
+    <section class="section" id="precios" style="background: var(--bg-body);">
+      <div class="container">
+        <div class="section__header">
+          <span class="section__label">Precios</span>
+          <h2 class="section__title">Invertí en atención, no en personal</h2>
+          <p class="section__subtitle">Una secretaria virtual que trabaja 24/7 por menos de lo que cuesta un empleado a tiempo parcial.</p>
+        </div>
+        <div class="pricing-card">
+          <div class="section__label" style="margin-bottom: 8px;">Plan Base</div>
+          <div class="pricing-card__price">$200.000 <span>ARS/mes</span></div>
+          <div class="pricing-card__setup">+$50.000 setup inicial · Primer mes: $250.000 ARS</div>
+          <ul class="pricing-card__features">
+            <li>Bot personalizado para tu negocio</li>
+            <li>Respuestas automáticas 24/7</li>
+            <li>Agendamiento de turnos</li>
+            <li>Integración con Google Calendar</li>
+            <li>Panel de administración</li>
+            <li>Sin permanencia</li>
+          </ul>
+          <a href="https://wa.me/5492233550738" class="btn btn--whatsapp btn--block" data-whatsapp-cta target="_blank" rel="noopener noreferrer">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+            Ver cómo funciona
+          </a>
+        </div>
+      </div>
+    </section>
+
     <!-- Sobre mí -->
-    <section class="section" id="sobre-mi" style="background: var(--bg-body);">
+    <section class="section" id="sobre-mi" style="background: var(--bg-card);">
       <div class="container">
         <div class="section__header">
           <span class="section__label">Quién lo hace</span>
           <h2 class="section__title">Hecho a mano, con dedicación</h2>
         </div>
-        <div style="display: flex; align-items: center; justify-content: center; gap: 32px; flex-wrap: wrap; max-width: 600px; margin: 0 auto;">
-          <img src="perfil.jpeg" alt="Rodrigo Rodriguez" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; box-shadow: var(--shadow);" />
+        <div class="about-card">
+          <img src="perfil.jpeg" alt="Rodrigo Rodriguez" />
           <div style="text-align: center; max-width: 360px;">
-            <p style="font-size: 1.1rem; font-weight: 600; margin-bottom: 8px;">Hola, soy Rodrigo.</p>
-            <p style="font-size: 0.95rem; color: var(--text-secondary);">Yo mismo configuro cada MiCita y te acompaño durante toda la implementación.</p>
+            <p style="font-size: 1.25rem; font-weight: 700; margin-bottom: 8px;">Hola, soy Rodrigo.</p>
+            <p style="font-size: 1rem; color: var(--text-secondary); line-height: 1.6;">Yo mismo configuro cada MiCita y te acompaño durante toda la implementación. La reunión es conmigo, sin intermediarios.</p>
           </div>
         </div>
       </div>
@@ -864,22 +881,15 @@
     <section class="cta-section" id="contacto">
       <div class="container">
         <div class="section__header">
-          <span class="section__label" style="color: rgba(255,255,255,0.8);">Empezá hoy</span>
+          <span class="section__label" style="color: rgba(255,255,255,0.85);">Empezá hoy</span>
           <h2 class="section__title">¿Querés ver cómo funciona en tu negocio?</h2>
-          <p class="section__subtitle">Te muestro en 20 minutos. Si te sirve, lo implementamos. Si no, no pasa nada.</p>
+          <p class="section__subtitle">Te muestro cómo funciona MiCita para tu negocio. Si te sirve, lo implementamos. Si no, no pasa nada.</p>
         </div>
-        <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
-          <a href="https://wa.me/5492233550738" class="btn btn--primary" style="background: #fff; color: var(--accent);" data-whatsapp-cta target="_blank" rel="noopener noreferrer">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
-            Quiero mi secretaria virtual
-          </a>
-        </div>
-        <p style="margin-top: 24px; font-size: 0.95rem; opacity: 0.9;">
-          Plan base: $200.000 ARS/mes + $50.000 setup | Primer mes: $250.000 ARS
-        </p>
-        <p style="margin-top: 8px; font-size: 0.85rem; opacity: 0.8;">
-          También podés escribirme directo al +54 9 223 355-0738
-        </p>
+        <a href="https://wa.me/5492233550738" class="btn btn--whatsapp btn--primary" style="font-size: 1.15rem; padding: 20px 36px;" data-whatsapp-cta target="_blank" rel="noopener noreferrer">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+          Ver cómo funciona
+        </a>
+        <p style="margin-top: 24px; font-size: 0.95rem; opacity: 0.9;">Sin compromiso</p>
       </div>
     </section>
   </main>
@@ -890,181 +900,16 @@
     </div>
   </footer>
 
-  <a href="https://wa.me/5492233550738" class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="Contactar por WhatsApp" data-whatsapp-cta>
-    <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
-  </a>
-
   <!-- Mobile sticky CTA -->
   <div class="mobile-cta-bar">
-    <a href="https://wa.me/5492233550738" class="btn btn--primary btn--block" data-whatsapp-cta>
+    <a href="https://wa.me/5492233550738" class="btn btn--whatsapp btn--block" data-whatsapp-cta>
       <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
-      Quiero mi secretaria virtual
+      Ver cómo funciona
     </a>
   </div>
 
   <script>
-    // Header scroll
     document.getElementById('year').textContent = new Date().getFullYear();
-    const header = document.getElementById('header');
-    window.addEventListener('scroll', () => {
-      header.classList.toggle('scrolled', window.scrollY > 50);
-    });
-
-    // Widget Factory
-    function createWidget(messagesId, inputId, sendId, delay) {
-      const messagesEl = document.getElementById(messagesId);
-      const inputEl = document.getElementById(inputId);
-      const sendEl = document.getElementById(sendId);
-      let step = 'greeting';
-      let state = { service: '', serviceLabel: '', date: '', time: '' };
-      let isTyping = false;
-
-      function addMsg(text, isBot) {
-        const div = document.createElement('div');
-        div.className = 'demo-msg demo-msg--' + (isBot ? 'bot' : 'user');
-        div.textContent = text;
-        messagesEl.appendChild(div);
-        messagesEl.scrollTop = messagesEl.scrollHeight;
-      }
-
-      function addTyping() {
-        const div = document.createElement('div');
-        div.className = 'demo-msg--typing';
-        div.innerHTML = '<span></span><span></span><span></span>';
-        messagesEl.appendChild(div);
-        messagesEl.scrollTop = messagesEl.scrollHeight;
-        return div;
-      }
-
-      function clearChips() {
-        messagesEl.querySelectorAll('.demo-chips').forEach(el => el.remove());
-      }
-
-      function addChips(options) {
-        clearChips();
-        const div = document.createElement('div');
-        div.className = 'demo-chips';
-        div.style.alignSelf = 'flex-start';
-        options.forEach(opt => {
-          const chip = document.createElement('button');
-          chip.className = 'demo-chip';
-          chip.textContent = opt;
-          chip.addEventListener('click', () => {
-            if (isTyping) return;
-            inputEl.value = opt;
-            handleSend();
-          });
-          div.appendChild(chip);
-        });
-        messagesEl.appendChild(div);
-        messagesEl.scrollTop = messagesEl.scrollHeight;
-      }
-
-      function setInputEnabled(enabled) {
-        inputEl.disabled = !enabled;
-        sendEl.disabled = !enabled;
-        isTyping = !enabled;
-      }
-
-      function botResponse(text, chips, nextStep) {
-        setInputEnabled(false);
-        const typing = addTyping();
-        setTimeout(() => {
-          typing.remove();
-          addMsg(text, true);
-          if (chips) addChips(chips);
-          if (nextStep) step = nextStep;
-          setInputEnabled(true);
-        }, 700);
-      }
-
-      function handleSend() {
-        if (isTyping) return;
-        const text = inputEl.value.trim().toLowerCase();
-        if (!text) return;
-        addMsg(inputEl.value, false);
-        inputEl.value = '';
-        clearChips();
-
-        if (step === 'greeting') {
-          if (text.includes('1') || text.includes('turno') || text.includes('cita')) {
-            botResponse('¿Qué servicio te gustaría? ✨👇\n\na) Masaje Relajante (50 min) - $25.000\nb) Limpieza Facial (60 min) - $22.000\nc) Manicura Spa (30 min) - $12.000\nz) 🏠 Volver al menú', ['a', 'b', 'c'], 'service');
-          } else if (text.includes('2') || text.includes('servicio')) {
-            botResponse('Estos son nuestros servicios de bienestar:\n\n• Masaje Relajante (50 min) - $25.000\n• Limpieza Facial (60 min) - $22.000\n• Manicura Spa (30 min) - $12.000\n• Depilación con Cera (40 min) - $18.000\n\n¿Te gustaría reservar uno?', ['Sí', 'Volver'], 'greeting');
-          } else if (text.includes('3') || text.includes('precio')) {
-            botResponse('Nuestros servicios van de $12.000 a $32.000. Te cuento el precio de cualquiera en particular. ¿De cuál querés saber?', ['Masaje', 'Facial', 'Manicura', 'Volver'], 'greeting');
-          } else if (text.includes('4') || text.includes('llegar') || text.includes('dire')) {
-            botResponse('Estamos en Av. Santa Fe 1234, CABA. 🌿\n\n🚇 Subte D - estación Plaza Italia\n🚌 Colectivos: 12, 39, 60, 118\n\n¿Te ayudo en algo más?', ['Sí, sacar turno', 'No, gracias'], 'greeting');
-          } else if (text.includes('7') || text.includes('humano') || text.includes('persona')) {
-            botResponse('Perfecto, te paso con alguien del equipo. Un momento por favor... 🙋‍♀️', null, 'greeting');
-          } else {
-            botResponse('¡Hola! ✨ Soy Herminda, tu guía en este espacio de bienestar. ¿En qué puedo ayudarte hoy? 👇\n\n1️⃣ Sacar turno\n2️⃣ Ver servicios\n3️⃣ Consultar precios\n4️⃣ Cómo llegar\n7️⃣ Hablar con humano', ['1', '2', '3', '4'], 'greeting');
-          }
-        } else if (step === 'service') {
-          if (text === 'a' || text.includes('masaje')) {
-            state.service = 'masaje'; state.serviceLabel = 'Masaje Relajante';
-            botResponse('¡Excelente elección! 🌙 Vamos a agendar tu momento de relax.\n\n¿Para qué día querés reservar? Podés decirme *hoy*, *mañana*, o un día de la semana.', ['Hoy', 'Mañana', 'Viernes'], 'date');
-          } else if (text === 'b' || text.includes('facial')) {
-            state.service = 'facial'; state.serviceLabel = 'Limpieza Facial';
-            botResponse('¡Excelente elección! 🌿 Vamos a agendar tu momento de cuidado.\n\n¿Para qué día querés reservar? Podés decirme *hoy*, *mañana*, o un día de la semana.', ['Hoy', 'Mañana', 'Viernes'], 'date');
-          } else if (text === 'c' || text.includes('manicura')) {
-            state.service = 'manicura'; state.serviceLabel = 'Manicura Spa';
-            botResponse('¡Excelente elección! 💅 Vamos a agendar tu momento de belleza.\n\n¿Para qué día querés reservar? Podés decirme *hoy*, *mañana*, o un día de la semana.', ['Hoy', 'Mañana', 'Viernes'], 'date');
-          } else if (text === 'z' || text.includes('menu') || text.includes('volver')) {
-            botResponse('¿Deseás volver al menú principal?\n\nResponde *Sí* para volver o *No* para continuar.', ['Sí', 'No'], 'confirm_menu');
-          } else {
-            botResponse('No entendí. Estas son las opciones:\n\na) Masaje Relajante\nb) Limpieza Facial\nc) Manicura Spa\nz) 🏠 Volver al menú', ['a', 'b', 'c'], 'service');
-          }
-        } else if (step === 'confirm_menu') {
-          if (text.includes('si') || text.includes('sí')) {
-            botResponse('¡Hola! ✨ Soy Herminda, tu guía en este espacio de bienestar. ¿En qué puedo ayudarte hoy? 👇\n\n1️⃣ Sacar turno\n2️⃣ Ver servicios\n3️⃣ Consultar precios\n4️⃣ Cómo llegar\n7️⃣ Hablar con humano', ['1', '2', '3', '4'], 'greeting');
-          } else {
-            botResponse('¿Qué servicio te gustaría? ✨👇\n\na) Masaje Relajante\nb) Limpieza Facial\nc) Manicura Spa\nz) 🏠 Volver al menú', ['a', 'b', 'c'], 'service');
-          }
-        } else if (step === 'date') {
-          if (text.includes('hoy') || text.includes('mañana') || text.includes('viernes')) {
-            state.date = text.includes('hoy') ? 'Hoy' : (text.includes('viernes') ? 'Viernes' : 'Mañana');
-            botResponse('📅 Horarios disponibles para ' + state.date.toLowerCase() + ':\n\na) 10:00\nb) 10:30\nc) 11:00\nd) 11:30\ne) 14:00\nf) 14:30\nz) 🏠 Volver al menú\n\n¿Qué horario preferís?', ['a', 'b', 'c', 'd', 'e', 'f'], 'time');
-          } else {
-            botResponse('No entendí la fecha. ¿Podés decirme *hoy*, *mañana*, o un día de la semana?', ['Hoy', 'Mañana', 'Viernes'], 'date');
-          }
-        } else if (step === 'time') {
-          const timeMap = { 'a': '10:00', 'b': '10:30', 'c': '11:00', 'd': '11:30', 'e': '14:00', 'f': '14:30' };
-          if (timeMap[text]) {
-            state.time = timeMap[text];
-            botResponse('✨ ¡Perfecto! ' + state.date.toLowerCase() + ' a las ' + state.time + '.\n\n¿A nombre de quién hacemos la reserva?', null, 'name');
-          } else if (text === 'z') {
-            botResponse('¿Deseás volver al menú principal?\n\nResponde *Sí* para volver o *No* para continuar.', ['Sí', 'No'], 'confirm_menu');
-          } else {
-            botResponse('El horario no está disponible. 😔\n\nEstos son los disponibles:\n\na) 10:00\nb) 10:30\nc) 11:00\nd) 11:30\ne) 14:00\nf) 14:30\n\n¿Cuál preferís?', ['a', 'b', 'c', 'd', 'e', 'f'], 'time');
-          }
-        } else if (step === 'name') {
-          if (text.length > 2) {
-            const name = text.charAt(0).toUpperCase() + text.slice(1);
-            botResponse('📋 *Resumen de tu turno:*\n\n📅 ' + state.date + ' a las ' + state.time + '\n💆 ' + state.serviceLabel + '\n👤 ' + name + '\n\n¿Confirmamos? Responde *Sí* para confirmar o *No* para cambiar algo.', ['Sí', 'No'], 'confirm');
-          } else {
-            botResponse('¿Podés decirme tu nombre y apellido para la reserva?', null, 'name');
-          }
-        } else if (step === 'confirm') {
-          if (text.includes('si') || text.includes('sí')) {
-            botResponse('✅ *¡Turno confirmado!* ✨\n\n📅 ' + state.date + ' a las ' + state.time + '\n💆 ' + state.serviceLabel + '\n\n¡Te esperamos! 🌟\n\n¿Necesitás algo más?', ['Sacar otro turno', 'Ver servicios', 'No, gracias'], 'greeting');
-          } else {
-            botResponse('Turno cancelado. ¿Querés intentar de nuevo? Escribí *turno* cuando quieras.', ['1', '2', '3'], 'greeting');
-          }
-        }
-      }
-
-      sendEl.addEventListener('click', handleSend);
-      inputEl.addEventListener('keydown', (e) => { if (e.key === 'Enter') handleSend(); });
-
-      // Initial greeting
-      setTimeout(() => {
-        botResponse('¡Hola! ✨ Soy Herminda, tu guía en este espacio de bienestar. ¿En qué puedo ayudarte hoy? 👇\n\n1️⃣ Sacar turno\n2️⃣ Ver servicios\n3️⃣ Consultar precios\n4️⃣ Cómo llegar\n7️⃣ Hablar con humano', ['1', '2', '3', '4'], 'greeting');
-      }, delay || 500);
-    }
-
-    createWidget('heroMessages', 'heroInput', 'heroSend', 800);
-    createWidget('mobileMessages', 'mobileInput', 'mobileSend', 800);
 
     // Meta Conversion tracking for landing page
     (function() {
@@ -1084,11 +929,9 @@
         return 'event_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
       }
 
-      // Capture fbclid and test_event_code from URL for Meta attribution
       const fbclid = getQueryParam('fbclid');
       const testEventCode = getQueryParam('test_event_code');
 
-      // Build unified WhatsApp message with fbclid when available
       function buildWhatsAppHref(baseHref) {
         const url = new URL(baseHref);
         let message = 'Hola, vi MiCita y quiero saber cómo funciona para mi negocio.';
@@ -1099,7 +942,6 @@
         return url.toString();
       }
 
-      // Apply unified message to all WhatsApp CTAs
       document.querySelectorAll('a[href*="wa.me"], [data-whatsapp-cta]').forEach(function(el) {
         try {
           el.href = buildWhatsAppHref(el.href);
@@ -1113,12 +955,10 @@
         const eventName = 'Contact';
         const eventSourceUrl = window.location.href;
 
-        // Browser Pixel event (with event_id for deduplication)
         if (typeof fbq === 'function') {
           fbq('track', eventName, { event_id: eventId });
         }
 
-        // Server-side Conversion API event
         const payload = {
           event_name: eventName,
           event_id: eventId,
@@ -1145,8 +985,36 @@
       document.querySelectorAll('a[href*="wa.me"], a[href^="mailto:"]').forEach(function(el) {
         el.addEventListener('click', trackContact);
       });
-
     })();
+
+    // Mobile sticky CTA: aparece 150px antes de que termine el hero
+    (function() {
+      const mobileBar = document.querySelector('.mobile-cta-bar');
+      const hero = document.getElementById('hero');
+      if (!mobileBar || !hero) return;
+
+      function toggleStickyBar() {
+        const heroBottom = hero.getBoundingClientRect().bottom;
+        const triggerOffset = 150;
+        if (heroBottom <= triggerOffset) {
+          mobileBar.classList.add('is-visible');
+        } else {
+          mobileBar.classList.remove('is-visible');
+        }
+      }
+
+      window.addEventListener('scroll', toggleStickyBar, { passive: true });
+      toggleStickyBar();
+    })();
+
+    // Hero video play
+    function playHeroVideo() {
+      const video = document.getElementById('heroVideo');
+      const overlay = document.getElementById('heroVideoOverlay');
+      if (!video || !overlay) return;
+      video.play();
+      overlay.classList.add('is-hidden');
+    }
   </script>
 </body>
 </html>
