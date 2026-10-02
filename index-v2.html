@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-EFWDC2M7DJ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-EFWDC2M7DJ');
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MiCita | Tu WhatsApp puede atender por vos</title>
+  <meta name="description" content="MiCita responde consultas, informa precios y horarios y agenda turnos automáticamente por WhatsApp, las 24 horas. Descubrí cómo funciona en tu negocio." />
+  <meta name="author" content="Rodrigo Rodriguez" />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#faf8f5" />
+  <link rel="canonical" href="https://micita.com.ar" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://micita.com.ar" />
+  <meta property="og:title" content="MiCita | Tu WhatsApp puede atender por vos" />
+  <meta property="og:description" content="MiCita responde consultas, informa precios y horarios y agenda turnos automáticamente por WhatsApp, las 24 horas." />
+  <meta property="og:locale" content="es_AR" />
+
+  <meta name="keywords" content="micita, secretaria virtual whatsapp, agenda citas automatica, bot whatsapp negocios, atencion cliente 24/7" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg-body: #faf8f5;
+      --bg-card: #ffffff;
+      --text-primary: #1a1a1a;
+      --text-secondary: #5a5a5a;
+      --accent: #c49a6c;
+      --accent-hover: #b08555;
+      --accent-light: #f5ebe0;
+      --border: #e8e2db;
+      --radius: 16px;
+      --radius-sm: 10px;
+      --shadow: 0 10px 40px rgba(0,0,0,0.06);
+      --shadow-accent: 0 10px 40px rgba(196,154,108,0.15);
+      --shadow-phone: 0 30px 80px rgba(0,0,0,0.12);
+      --transition: all 0.3s ease;
+      --container: 1140px;
+      --header-h: 72px;
+      --whatsapp: #25d366;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: var(--header-h); }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: var(--bg-body);
+      color: var(--text-primary);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+    .container { width: 100%; max-width: var(--container); margin: 0 auto; padding: 0 24px; }
+
+    /* Header */
+    .header {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: var(--header-h);
+      z-index: 1000;
+      background: rgba(250, 248, 245, 0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      transition: var(--transition);
+    }
+    .header .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 100%;
+    }
+    .logo {
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .logo__icon {
+      width: 36px; height: 36px;
+      background: var(--accent);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 16px 28px;
+      border-radius: 100px;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: var(--transition);
+      cursor: pointer;
+      border: none;
+      white-space: nowrap;
+    }
+    .btn--primary {
+      background: var(--accent);
+      color: #fff;
+      box-shadow: var(--shadow-accent);
+    }
+    .btn--primary:hover {
+      background: var(--accent-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 14px 48px rgba(196,154,108,0.28);
+    }
+    .btn--whatsapp {
+      background: var(--whatsapp);
+      color: #fff;
+      box-shadow: 0 8px 24px rgba(37,211,102,0.3);
+    }
+    .btn--whatsapp:hover {
+      background: #1ebd59;
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(37,211,102,0.4);
+    }
+    .btn--small { padding: 12px 22px; font-size: 0.9rem; }
+    .btn--block { width: 100%; }
+    .btn--outline {
+      background: transparent;
+      color: var(--text-primary);
+      border: 1.5px solid var(--border);
+    }
+    .btn--outline:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /* Hero */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: 40px;
+      padding-bottom: 60px;
+      background: linear-gradient(135deg, var(--bg-body) 0%, var(--accent-light) 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -10%; right: -5%;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(196,154,108,0.1) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .hero__container {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 80px;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+    .hero__eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(196,154,108,0.12);
+      color: var(--accent-hover);
+      padding: 8px 16px;
+      border-radius: 100px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 24px;
+    }
+    .hero__title {
+      font-size: 3.6rem;
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      margin-bottom: 24px;
+      color: var(--text-primary);
+    }
+    .hero__title span { color: var(--accent); }
+    .hero__subtitle {
+      font-size: 1.25rem;
+      color: var(--text-secondary);
+      margin-bottom: 32px;
+      max-width: 520px;
+      line-height: 1.7;
+    }
+    .hero__features {
+      display: flex;
+      gap: 24px;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+    }
+    .hero__feature {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+    .hero__feature-icon {
+      width: 36px; height: 36px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+    }
+    .hero__cta {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      align-items: flex-start;
+      margin-bottom: 24px;
+    }
+    .hero__cta-main {
+      font-size: 1.15rem;
+      padding: 20px 36px;
+    }
+    .hero__cta-note {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .hero__trust {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .trust-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--bg-card);
+      color: var(--text-secondary);
+      padding: 10px 16px;
+      border-radius: 100px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      border: 1px solid var(--border);
+    }
+    .trust-badge::before {
+      content: '✓';
+      color: var(--whatsapp);
+      font-weight: 700;
+    }
+
+    /* Phone Mockup */
+    .phone-showcase {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .phone-image {
+      max-width: 360px;
+      width: 100%;
+      height: auto;
+      border-radius: 44px;
+      box-shadow: var(--shadow-phone);
+      display: block;
+    }
+
+    /* Sections */
+    .section { padding: 100px 0; }
+    .section__header {
+      text-align: center;
+      max-width: 640px;
+      margin: 0 auto 64px;
+    }
+    .section__label {
+      display: inline-block;
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+    .section__title {
+      font-size: 2.6rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+    .section__subtitle {
+      font-size: 1.15rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* How it works */
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .step-card {
+      text-align: center;
+      position: relative;
+    }
+    .step-card:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      top: 32px; right: -12px;
+      width: 24px; height: 2px;
+      background: var(--border);
+    }
+    .step-card__number {
+      width: 64px; height: 64px;
+      background: var(--accent);
+      color: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 0 auto 20px;
+    }
+    .step-card__title {
+      font-weight: 600;
+      font-size: 1.05rem;
+      margin-bottom: 8px;
+    }
+    .step-card__desc {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* Benefits */
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .benefit-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px;
+      text-align: center;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+    }
+    .benefit-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.08);
+    }
+    .benefit-card__icon {
+      width: 56px; height: 56px;
+      background: var(--accent-light);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin: 0 auto 16px;
+    }
+    .benefit-card__title {
+      font-weight: 700;
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+    }
+    .benefit-card__desc {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* Testimonials */
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .testimonial-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px;
+      box-shadow: var(--shadow);
+    }
+    .testimonial-stars {
+      color: #f59e0b;
+      font-size: 1.2rem;
+      letter-spacing: 2px;
+      margin-bottom: 16px;
+    }
+    .testimonial-text {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 24px;
+      font-style: italic;
+    }
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .testimonial-avatar {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+    .testimonial-name { font-weight: 600; font-size: 0.95rem; }
+    .testimonial-role { font-size: 0.85rem; color: var(--text-secondary); }
+    .testimonial-link { display: block; font-size: 0.8rem; color: var(--accent); margin-top: 2px; }
+
+    /* Pricing */
+    .pricing-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 48px;
+      max-width: 600px;
+      margin: 0 auto;
+      text-align: center;
+      box-shadow: var(--shadow);
+    }
+    .pricing-card__price {
+      font-size: 3rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      margin: 16px 0;
+    }
+    .pricing-card__price span {
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+    }
+    .pricing-card__setup {
+      color: var(--text-secondary);
+      margin-bottom: 24px;
+    }
+    .pricing-card__features {
+      text-align: left;
+      max-width: 360px;
+      margin: 0 auto 32px;
+      list-style: none;
+    }
+    .pricing-card__features li {
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .pricing-card__features li::before {
+      content: '✓';
+      color: var(--whatsapp);
+      font-weight: 700;
+    }
+
+    /* About */
+    .about-card {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 32px;
+      flex-wrap: wrap;
+      max-width: 600px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .about-card img {
+      width: 140px; height: 140px;
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: var(--shadow);
+    }
+
+    /* CTA Section */
+    .cta-section {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%);
+      color: #fff;
+      padding: 100px 0;
+      text-align: center;
+    }
+    .cta-section .section__title,
+    .cta-section .section__subtitle { color: #fff; }
+    .cta-section .btn--whatsapp {
+      background: #fff;
+      color: var(--whatsapp);
+      margin-top: 24px;
+    }
+    .cta-section .btn--whatsapp:hover {
+      background: #f0fdf4;
+      transform: translateY(-2px);
+    }
+
+    /* Footer */
+    .footer {
+      padding: 40px 0;
+      text-align: center;
+      border-top: 1px solid var(--border);
+      background: var(--bg-card);
+    }
+    .footer__copy {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+
+    /* WhatsApp Float */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      width: 60px;
+      height: 60px;
+      background: var(--whatsapp);
+      color: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 20px rgba(37,211,102,0.3);
+      transition: var(--transition);
+      z-index: 9999;
+    }
+    .whatsapp-float:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 30px rgba(37,211,102,0.4);
+    }
+
+    /* Mobile sticky CTA */
+    .mobile-cta-bar {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      padding: 12px 16px;
+      background: #fff;
+      border-top: 1px solid var(--border);
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
+      z-index: 9998;
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .hero__container { grid-template-columns: 1fr; gap: 60px; text-align: center; }
+      .hero__title { font-size: 2.8rem; }
+      .hero__subtitle { margin: 0 auto 32px; }
+      .hero__features { justify-content: center; }
+      .hero__cta { align-items: center; }
+      .hero__trust { justify-content: center; }
+      .phone-showcase { order: -1; }
+      .phone-image { max-width: 300px; }
+      .steps-grid { grid-template-columns: repeat(2, 1fr); }
+      .step-card:not(:last-child)::after { display: none; }
+      .step-card:nth-child(2)::after { display: none; }
+      .benefits-grid { grid-template-columns: repeat(2, 1fr); }
+      .testimonials-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 768px) {
+      .hero { padding-top: 24px; }
+      .hero__title { font-size: 2.2rem; }
+      .hero__subtitle { font-size: 1.1rem; }
+      .hero__features { flex-direction: column; gap: 12px; align-items: center; }
+      .hero__cta-main { width: 100%; justify-content: center; font-size: 1.05rem; }
+      .hero__trust { flex-direction: column; align-items: center; }
+      .phone-image { max-width: 260px; }
+      .section { padding: 70px 0; }
+      .section__title { font-size: 2rem; }
+      .steps-grid { grid-template-columns: 1fr; }
+      .benefits-grid { grid-template-columns: 1fr; }
+      .pricing-card { padding: 32px 24px; }
+      .pricing-card__price { font-size: 2.4rem; }
+      body { padding-bottom: 90px; }
+      .mobile-cta-bar { display: block; }
+      .whatsapp-float { bottom: 88px; right: 16px; width: 52px; height: 52px; }
+    }
+  </style>
+
+  <!-- Meta Pixel Code -->
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '1242056251208109');
+  fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=1242056251208109&ev=PageView&noscript=1"
+  /></noscript>
+  <!-- End Meta Pixel Code -->
+</head>
+<body>
+  <main>
+    <!-- Hero -->
+    <section class="hero" id="hero">
+      <div class="container hero__container">
+        <div>
+          <div class="hero__eyebrow">TU SECRETARIA VIRTUAL POR WHATSAPP</div>
+          <h1 class="hero__title">Tu WhatsApp puede <span>atender por vos.</span></h1>
+          <p class="hero__subtitle">MiCita responde consultas, informa precios y horarios y agenda turnos automáticamente, las 24 horas, mientras vos seguís trabajando.</p>
+
+          <div class="hero__features">
+            <div class="hero__feature">
+              <div class="hero__feature-icon">💬</div>
+              <span>Responde WhatsApp</span>
+            </div>
+            <div class="hero__feature">
+              <div class="hero__feature-icon">📅</div>
+              <span>Agenda turnos</span>
+            </div>
+            <div class="hero__feature">
+              <div class="hero__feature-icon">🕐</div>
+              <span>Atiende 24/7</span>
+            </div>
+          </div>
+
+          <div class="hero__cta">
+            <a href="https://wa.me/5492233550738" class="btn btn--whatsapp hero__cta-main" data-whatsapp-cta target="_blank" rel="noopener noreferrer">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+              Ver cómo funciona
+            </a>
+            <div class="hero__cta-note">
+              <span>⏱️</span>
+              <span>Te mostramos sin cargo</span>
+            </div>
+          </div>
+
+          <div class="hero__trust">
+            <div class="trust-badge">Asesoramiento sin cargo</div>
+            <div class="trust-badge">Setup en 48 horas</div>
+            <div class="trust-badge">Sin permanencia</div>
+          </div>
+        </div>
+
+        <div class="phone-showcase">
+          <img src="hero-phone.jpg" alt="MiCita respondiendo automáticamente por WhatsApp y agendando un turno" class="phone-image" />
+        </div>
+      </div>
+    </section>
+
+    <!-- Cómo funciona -->
+    <section class="section" id="como-funciona" style="background: var(--accent-light);">
+      <div class="container">
+        <div class="section__header">
+          <span class="section__label">Cómo funciona</span>
+          <h2 class="section__title">Setup en 4 pasos simples</h2>
+        </div>
+        <div class="steps-grid">
+          <div class="step-card">
+            <div class="step-card__number">1</div>
+            <div class="step-card__title">Nos contás tu negocio</div>
+            <div class="step-card__desc">Nos decís qué servicios ofrecés, en qué horarios atendés, y cómo querés que responda el bot.</div>
+          </div>
+          <div class="step-card">
+            <div class="step-card__number">2</div>
+            <div class="step-card__title">Configuramos todo</div>
+            <div class="step-card__desc">Nosotros cargamos tus servicios, precios, horarios y conectamos tu WhatsApp Business.</div>
+          </div>
+          <div class="step-card">
+            <div class="step-card__number">3</div>
+            <div class="step-card__title">Conectamos el calendario</div>
+            <div class="step-card__desc">Tu Google Calendar se sincroniza automáticamente. Los turnos aparecen ahí en tiempo real.</div>
+          </div>
+          <div class="step-card">
+            <div class="step-card__number">4</div>
+            <div class="step-card__title">Empezás a recibir turnos</div>
+            <div class="step-card__desc">Los clientes escriben por WhatsApp y el bot agenda solo. Vos solo mirás el calendario.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Beneficios -->
+    <section class="section" id="beneficios" style="background: var(--bg-body);">
+      <div class="container">
+        <div class="section__header">
+          <span class="section__label">Beneficios</span>
+          <h2 class="section__title">¿Por qué MiCita?</h2>
+        </div>
+        <div class="benefits-grid">
+          <div class="benefit-card">
+            <div class="benefit-card__icon">⚡</div>
+            <div class="benefit-card__title">Respuesta inmediata</div>
+            <div class="benefit-card__desc">Tus clientes no esperan. MiCita responde al instante, incluso fuera de horario.</div>
+          </div>
+          <div class="benefit-card">
+            <div class="benefit-card__icon">🎯</div>
+            <div class="benefit-card__title">Más turnos, menos trabajo</div>
+            <div class="benefit-card__desc">Agenda automáticamente las citas en tu calendario sin que vos tengas que intervenir.</div>
+          </div>
+          <div class="benefit-card">
+            <div class="benefit-card__icon">🛡️</div>
+            <div class="benefit-card__title">Sin permanencia</div>
+            <div class="benefit-card__desc">Probá el servicio sin atarte. Si no te sirve, podés cancelar cuando quieras.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonios -->
+    <section class="section" id="testimonios" style="background: var(--bg-card);">
+      <div class="container">
+        <div class="section__header">
+          <span class="section__label">Casos reales</span>
+          <h2 class="section__title">Lo que dicen quienes ya usan MiCita</h2>
+        </div>
+        <div class="testimonials-grid">
+          <div class="testimonial-card">
+            <div class="testimonial-stars">★★★★★</div>
+            <p class="testimonial-text">"En Boston Uniformes recibimos muchas consultas por WhatsApp: talles, stock, envíos y formas de pago. MiCita responde automáticamente las preguntas más frecuentes y los clientes compran más rápido. Nos dio una atención 24/7 sin aumentar el equipo."</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">E</div>
+              <div>
+                <div class="testimonial-name">Eliana Sabas</div>
+                <div class="testimonial-role">Boston Uniformes</div>
+                <span class="testimonial-link">bostonuniformes.com.ar</span>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card">
+            <div class="testimonial-stars">★★★★★</div>
+            <p class="testimonial-text">"En Zezen necesitábamos explicar cómo funciona la app para gimnasios y atletas sin depender de que alguien esté respondiendo todo el día. MiCita agenda demos, responde dudas frecuentes y filtra leads. Nos ahorra horas de trabajo todos los días."</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">H</div>
+              <div>
+                <div class="testimonial-name">Horacio Rodríguez</div>
+                <div class="testimonial-role">Zezen</div>
+                <span class="testimonial-link">zezen.app</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Precios -->
+    <section class="section" id="precios" style="background: var(--bg-body);">
+      <div class="container">
+        <div class="section__header">
+          <span class="section__label">Precios</span>
+          <h2 class="section__title">Invertí en atención, no en personal</h2>
+          <p class="section__subtitle">Una secretaria virtual que trabaja 24/7 por menos de lo que cuesta un empleado a tiempo parcial.</p>
+        </div>
+        <div class="pricing-card">
+          <div class="section__label" style="margin-bottom: 8px;">Plan Base</div>
+          <div class="pricing-card__price">$200.000 <span>ARS/mes</span></div>
+          <div class="pricing-card__setup">+$50.000 setup inicial · Primer mes: $250.000 ARS</div>
+          <ul class="pricing-card__features">
+            <li>Bot personalizado para tu negocio</li>
+            <li>Respuestas automáticas 24/7</li>
+            <li>Agendamiento de turnos</li>
+            <li>Integración con Google Calendar</li>
+            <li>Panel de administración</li>
+            <li>Sin permanencia</li>
+          </ul>
+          <a href="https://wa.me/5492233550738" class="btn btn--whatsapp btn--block" data-whatsapp-cta target="_blank" rel="noopener noreferrer">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+            Ver cómo funciona
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sobre mí -->
+    <section class="section" id="sobre-mi" style="background: var(--bg-card);">
+      <div class="container">
+        <div class="section__header">
+          <span class="section__label">Quién lo hace</span>
+          <h2 class="section__title">Hecho a mano, con dedicación</h2>
+        </div>
+        <div class="about-card">
+          <img src="perfil.jpeg" alt="Rodrigo Rodriguez" />
+          <div style="text-align: center; max-width: 360px;">
+            <p style="font-size: 1.25rem; font-weight: 700; margin-bottom: 8px;">Hola, soy Rodrigo.</p>
+            <p style="font-size: 1rem; color: var(--text-secondary); line-height: 1.6;">Yo mismo configuro cada MiCita y te acompaño durante toda la implementación. La reunión es conmigo, sin intermediarios.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section" id="contacto">
+      <div class="container">
+        <div class="section__header">
+          <span class="section__label" style="color: rgba(255,255,255,0.85);">Empezá hoy</span>
+          <h2 class="section__title">¿Querés ver cómo funciona en tu negocio?</h2>
+          <p class="section__subtitle">Te muestro cómo funciona MiCita para tu negocio. Si te sirve, lo implementamos. Si no, no pasa nada.</p>
+        </div>
+        <a href="https://wa.me/5492233550738" class="btn btn--whatsapp btn--primary" style="font-size: 1.15rem; padding: 20px 36px;" data-whatsapp-cta target="_blank" rel="noopener noreferrer">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+          Ver cómo funciona
+        </a>
+        <p style="margin-top: 24px; font-size: 0.95rem; opacity: 0.9;">Sin compromiso</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p class="footer__copy">© <span id="year"></span> MiCita. Hecho con 💚 en Argentina.</p>
+    </div>
+  </footer>
+
+  <a href="https://wa.me/5492233550738" class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="Contactar por WhatsApp" data-whatsapp-cta>
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+  </a>
+
+  <!-- Mobile sticky CTA -->
+  <div class="mobile-cta-bar">
+    <a href="https://wa.me/5492233550738" class="btn btn--whatsapp btn--block" data-whatsapp-cta>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+      Ver cómo funciona
+    </a>
+  </div>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Meta Conversion tracking for landing page
+    (function() {
+      function getCookie(name) {
+        const value = '; ' + document.cookie;
+        const parts = value.split('; ' + name + '=');
+        if (parts.length === 2) return parts.pop().split(';').shift();
+        return null;
+      }
+
+      function getQueryParam(name) {
+        const params = new URLSearchParams(window.location.search);
+        return params.get(name);
+      }
+
+      function generateEventId() {
+        return 'event_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+      }
+
+      const fbclid = getQueryParam('fbclid');
+      const testEventCode = getQueryParam('test_event_code');
+
+      function buildWhatsAppHref(baseHref) {
+        const url = new URL(baseHref);
+        let message = 'Hola, vi MiCita y quiero saber cómo funciona para mi negocio.';
+        if (fbclid) {
+          message += ' (ref: ' + fbclid + ')';
+        }
+        url.searchParams.set('text', message);
+        return url.toString();
+      }
+
+      document.querySelectorAll('a[href*="wa.me"], [data-whatsapp-cta]').forEach(function(el) {
+        try {
+          el.href = buildWhatsAppHref(el.href);
+        } catch (e) {
+          console.error('[CAPI] Error building WhatsApp href:', e);
+        }
+      });
+
+      function trackContact() {
+        const eventId = generateEventId();
+        const eventName = 'Contact';
+        const eventSourceUrl = window.location.href;
+
+        if (typeof fbq === 'function') {
+          fbq('track', eventName, { event_id: eventId });
+        }
+
+        const payload = {
+          event_name: eventName,
+          event_id: eventId,
+          event_source_url: eventSourceUrl,
+          fbp: getCookie('_fbp'),
+          fbc: getCookie('_fbc')
+        };
+        if (fbclid) {
+          payload.fbc = 'fb.1.' + Date.now() + '.' + fbclid;
+        }
+        if (testEventCode) {
+          payload.test_event_code = testEventCode;
+        }
+
+        fetch('https://micita.asistentebot.com.ar/api/conversion', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        }).catch(function(err) {
+          console.error('[CAPI] Error:', err);
+        });
+      }
+
+      document.querySelectorAll('a[href*="wa.me"], a[href^="mailto:"]').forEach(function(el) {
+        el.addEventListener('click', trackContact);
+      });
+    })();
+  </script>
+</body>
+</html>
